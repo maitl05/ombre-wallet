@@ -9,9 +9,9 @@ export type NavMenuProps = { className?: ClassName }
 
 export default function NavMenu({ className, ...props }: NavMenuProps) {
   return (
-    <div className={cn('px-5', className)}>
+    <div className={cn('', className)}>
       <Link href="/">
-        <img className="m-auto p-5" src="/images/logo.svg" />
+        <img className="m-auto p-5 h-28" src="/images/logo.svg" />
       </Link>
       <hr className="mb-4" />
 
