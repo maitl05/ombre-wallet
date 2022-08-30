@@ -13,7 +13,7 @@ export default function WalletHeader({
   return (
     <>
       <div className={cn('h-28 flex items-center')}>
-        <h1 className="text-3xl">{title}</h1>
+        <h1 className="text-3xl pl-2">{title}</h1>
       </div>
       <hr className="mb-4" />
     </>

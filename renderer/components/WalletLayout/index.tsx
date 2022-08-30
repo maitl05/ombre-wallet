@@ -15,7 +15,7 @@ export default function WalletLayout({
   ...props
 }: WalletLayoutProps) {
   return (
-    <div className="w-screen h-screen flex gap-5 p-5">
+    <div className="w-screen h-screen flex gap-5 px-5">
       <div className="flex flex-col justify-between w-full max-w-xs">
         <NavMenu />
         <WalletFooter />
