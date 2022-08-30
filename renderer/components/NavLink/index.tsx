@@ -29,7 +29,7 @@ export default function NavLink({
           className={cn(
             'flex text-lg gap-3 items-center border-b-2 border-primary-600 px-3 py-2',
             isActive && 'font-extrabold',
-            'hover:text-white',
+            'hover:text-white transition-colors',
           )}>
           {icon}
           {title}
