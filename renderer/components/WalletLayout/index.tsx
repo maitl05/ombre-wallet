@@ -23,7 +23,9 @@ export default function WalletLayout({
 
       <div className="flex flex-col flex-grow">
         <WalletHeader title={title} />
-        <div>{children}</div>
+        <div className="flex flex-col gap-9 items-start w-full h-screen">
+          {children}
+        </div>
       </div>
     </div>
   )
