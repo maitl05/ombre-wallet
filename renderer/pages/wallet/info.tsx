@@ -1,26 +1,20 @@
 import WalletLayout from 'components/WalletLayout'
-import Button from 'components/Button'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import Input from 'components/Input'
-import { testHelloValidator } from 'helpers/validators'
-import { useState } from 'react'
+import { useContext } from 'react'
+import AddressPhoto from 'components/AddressPhoto'
+import { WalletCtx } from 'contexts/wallet'
 
 export default function WalletInfo() {
-  const [testInp, setTestInp] = useState('')
+  const { wallet } = useContext(WalletCtx)
 
   return (
     <WalletLayout title="Account info">
-      <h1>your wallet info</h1>
-      {/* //TODO debug this is for test remove later */}
-      <Button btnType="primary">
-        <FontAwesomeIcon icon={faPlus} /> useless button
-      </Button>
-      {/* //TODO debug this is for test remove later */}
-      <Input
-        label="say hello"
-        onBlur={(e) => setTestInp(e.target.value)}
-        validator={testHelloValidator}></Input>
+      <div className="flex flex-1 gap-3 p-2">
+        <AddressPhoto address={wallet?.info.address} />
+        <div className="break-all">
+          <p className="font-semibold text-2xl">{wallet?.info.name}</p>
+          <p className="text-lg">{wallet?.info.address}</p>
+        </div>
+      </div>
     </WalletLayout>
   )
 }
