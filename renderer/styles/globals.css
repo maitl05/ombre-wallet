@@ -39,6 +39,9 @@ a {
   scroll-behavior: smooth;
   scrollbar-width: 0.5rem;
   scrollbar-color: theme('colors.slate.600') transparent;
+  &:focus {
+    outline: none;
+  }
   &::-webkit-scrollbar {
     @apply w-2 h-2;
   }
