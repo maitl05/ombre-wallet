@@ -74,8 +74,10 @@ export default function Input({
       />
       <div
         className={cn(
-          'absolute top-0 right-0 left-0 w-1/2 max-w-lg min-w-min transition-opacity -translate-y-full bg-primary-800 border border-error-200 rounded-lg flex justify-center p-1 text-sm',
-          error && !_.isEmpty(value) ? 'opacity-100' : 'opacity-0',
+          'absolute top-0 right-0 left-0 w-1/2 max-w-lg min-w-min -translate-y-full bg-primary-800 border border-error-200 rounded-lg flex justify-center p-1 text-sm',
+          error && !_.isEmpty(value)
+            ? 'transition-opacity opacity-100'
+            : 'opacity-0',
         )}>
         {error}
       </div>
