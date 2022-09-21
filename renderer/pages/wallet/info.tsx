@@ -1,17 +1,20 @@
 import WalletLayout from 'components/WalletLayout'
-import Button from 'components/Button'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import Input from 'components/Input'
+import { useContext } from 'react'
+import AddressPhoto from 'components/AddressPhoto'
+import { WalletCtx } from 'contexts/wallet'
 
 export default function WalletInfo() {
+  const { wallet } = useContext(WalletCtx)
+
   return (
-    <WalletLayout>
-      <h1>your wallet info</h1>
-      <Button btnType="primary">
-        <FontAwesomeIcon icon={faPlus} /> useless button
-      </Button>
-      <Input></Input>
+    <WalletLayout title="Account info">
+      <div className="flex flex-1 gap-3 p-2">
+        <AddressPhoto address={wallet?.info.address} />
+        <div className="break-all">
+          <p className="font-semibold text-2xl">{wallet?.info.name}</p>
+          <p className="text-lg">{wallet?.info.address}</p>
+        </div>
+      </div>
     </WalletLayout>
   )
 }

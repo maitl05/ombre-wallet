@@ -1,6 +1,7 @@
 import React from 'react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import WalletProvider from 'components/WalletProvider'
 
 import '../styles/globals.css'
 
@@ -10,8 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Ombre wallet</title>
       </Head>
-
-      <Component {...pageProps} />
+      <WalletProvider>
+        <Component {...pageProps} />
+      </WalletProvider>
     </>
   )
 }
