@@ -19,7 +19,7 @@ export default function WalletProvider({
 }
 
 // TODO remove this
-let mockWallet = {
+let mockWallet: Wallet = {
   info: {
     name: 'my-ombre-wallet',
     address:
@@ -37,10 +37,25 @@ let mockWallet = {
   addressList: {
     used: [],
     unused: [
-      'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCE9fdk',
+      'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCEind0',
+      'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCEind1',
+      'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCEind2',
+      'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCEind3',
     ],
     addressBook: [],
   },
+  transactions: [
+    {
+      from: 'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCE1234',
+      to: 'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCE2345',
+      amount: 123,
+    },
+    {
+      from: 'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCE1234',
+      to: 'cashM3yWFHJ6hyxUqS1zYjjAMTSWrcUm5Cpc1bSdwNyCEmP2ii8EfVWLvvjysm2YXBXM2vGvpkGUs42RD1ihi9uD39CkCE5678',
+      amount: 172,
+    },
+  ],
 }
 
 // sample addresses
