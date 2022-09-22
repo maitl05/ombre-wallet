@@ -7,10 +7,11 @@ type Option = { value: string; label: string }
 
 export type SelectOptionProps = {
   className?: { [key in 'container']?: ClassName }
+  onChange: (objValue: any) => void
+  label: string
   options: Array<Option>
   defaultValue?: Option
-  onChange?: (objValue: any) => void
-  label: string
+  placeholder?: string
 } & Omit<Partial<OptionProps>, 'className'>
 
 export default function SelectOption({
@@ -19,10 +20,12 @@ export default function SelectOption({
   defaultValue,
   onChange,
   className,
+  placeholder,
   ...props
 }: SelectOptionProps) {
   return (
     <div className={cn(className?.container)}>
+      {label}:
       <Select
         instanceId={`select-input${label}`}
         options={options}
@@ -30,7 +33,7 @@ export default function SelectOption({
         isSearchable={false}
         styles={customStyles}
         onChange={(e: Option) => onChange(e.value)}
-        placeholder={label}
+        placeholder={placeholder}
         {...props}
       />
     </div>
