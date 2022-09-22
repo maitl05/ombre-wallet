@@ -24,7 +24,8 @@
     "electron-serve": "^1.1.0",
     "electron-store": "^8.0.1",
     "lodash": "^4.17.21",
-    "react-jazzicon": "^1.0.4"
+    "react-jazzicon": "^1.0.4",
+    "react-select": "^5.4.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.7",
