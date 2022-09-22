@@ -24,7 +24,7 @@ export default function SelectOption({
   ...props
 }: SelectOptionProps) {
   return (
-    <div className={cn(className?.container)}>
+    <div className={cn(className?.container, 'flex flex-col gap-2')}>
       {label}:
       <Select
         instanceId={`select-input${label}`}
