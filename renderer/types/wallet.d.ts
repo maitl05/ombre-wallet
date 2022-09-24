@@ -45,4 +45,9 @@ export type Wallet = {
     unused?: Array<string>
     addressBook?: Array<string>
   }
+  transactions?: Array<{
+    from: string
+    to: string
+    amount: number
+  }>
 }

@@ -39,7 +39,7 @@ export default function Input({
     <div
       className={cn(
         'relative flex min-w-min w-full justify-start items-center',
-        className,
+        className?.container,
       )}>
       <div
         className={cn(
@@ -51,13 +51,14 @@ export default function Input({
       </div>
       <input
         className={cn(
-          'p-2 bg-transparent border-2 rounded-md min-w-min max-w-lg w-1/2',
+          'p-2 bg-transparent border-2 rounded-md min-w-min w-full',
           'focus:outline-none transition-color',
           _.isEmpty(value)
             ? 'border-primary-400'
             : _.isEmpty(error)
             ? 'border-secondary-300'
             : 'border-error-400 bg-opacity-40',
+          className?.input,
         )}
         value={value}
         onKeyDown={(e) => {

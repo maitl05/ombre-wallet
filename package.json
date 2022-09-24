@@ -30,6 +30,7 @@
     "lodash": "^4.17.21",
     "promise-queue": "^2.2.5",
     "react-jazzicon": "^1.0.4",
+    "react-select": "^5.4.0",
     "request": "2.87.0",
     "request-promise": "4.2.2",
     "rotating-file-stream": "1.4.1"
