@@ -8,3 +8,5 @@ export type TypedEventEmitter<
   once<K extends keyof E>(s: K, listener: (v: E[K]) => void)
   off<K extends keyof E>(s: K, listener: (v: E[K]) => void)
 }
+
+export type DeepPartial<T extends {}> = { [K in keyof T]?: DeepPartial<T[K]> }

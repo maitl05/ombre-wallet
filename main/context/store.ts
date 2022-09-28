@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { storeDefaultState } from '../static/store-defaults'
 import { StoreState } from '../types/Store'
 import { EventEmitter } from 'events'
-import { TypedEventEmitter } from '../types/utils'
+import { DeepPartial, TypedEventEmitter } from '../types/utils'
 
 class StoreClass extends EventEmitter {
   private constructor() {
@@ -28,9 +28,9 @@ class StoreClass extends EventEmitter {
     throw new Error('E_READONLY')
   }
 
-  public update(value: Partial<StoreState>) {
+  public update(value: DeepPartial<StoreState>) {
     const res = {}
-    _.assign(res, this._state, value)
+    _.merge(res, this._state, value)
     this._state = res as StoreState
     _.keys(value).forEach((key) => this.emit(key, res[key]))
   }
@@ -87,6 +87,46 @@ class StoreClass extends EventEmitter {
       return this._state.wallet.info.height >= target_height - 1
     }
     return false
+  }
+
+  resetWalletData() {
+    this.update({
+      wallet: {
+        status: {
+          code: 1,
+          message: null,
+        },
+        info: {
+          name: '',
+          address: '',
+          height: 0,
+          balance: 0,
+          unlocked_balance: 0,
+          view_only: false,
+        },
+        secret: {
+          mnemonic: '',
+          view_key: '',
+          spend_key: '',
+        },
+        transactions: {
+          tx_list: [],
+        },
+        address_list: {
+          used: [],
+          unused: [],
+          address_book: [],
+        },
+      },
+    })
+  }
+
+  resetPendingConfig() {
+    this.update({
+      app: {
+        pending_config: this._state.app.config,
+      },
+    })
   }
 }
 
