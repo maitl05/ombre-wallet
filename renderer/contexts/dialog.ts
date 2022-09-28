@@ -1,6 +1,6 @@
 import { EventEmitter } from 'stream'
 import { DialogParams } from 'types'
-import { TypedEventEmitter } from '../../main/types/utils'
+import { TypedEventEmitter } from 'types/utils'
 
 export type DialogEventDetail = { open: DialogParams; settle: boolean }
 

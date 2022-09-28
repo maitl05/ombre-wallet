@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { storeDefaultState } from '../static/store-defaults'
 import { StoreState } from '../types/Store'
 import { EventEmitter } from 'events'
-import { DeepPartial, TypedEventEmitter } from '../types/utils'
+import { DeepPartial, TypedEventEmitter } from 'types/utils'
 
 class StoreClass extends EventEmitter {
   private constructor() {

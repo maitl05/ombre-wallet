@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import LoadingOverlay from 'components/LoadingOverlay'
 import { ipcRenderer } from 'electron'
 import { Dialog } from 'contexts/dialog'
+import { useStore } from 'hooks/observe-store'
 
 //TODO: this page checks for existence of config file for user and if
 //TODO: it doesn't find one redirects to welcome page otherwise
@@ -37,9 +38,21 @@ function Index() {
 
   useEffect(() => {
     if (isConnected) {
-      router.push('/wallet/info')
+      router.push('/wallet-select')
     }
   }, [isConnected])
+
+  const isFirstBoot = useStore(
+    'app',
+    (e) => e.status.code,
+    //  !== undefined && e.status.code == AppStatus.FirstBoot,
+  )
+
+  useEffect(() => {
+    // if (isFirstBoot) {
+    //   Gateway.i.send('core', 'save_config_init', Store.state)
+    // }
+  }, [isFirstBoot])
 
   return (
     <>

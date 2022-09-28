@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron'
 import _ from 'lodash'
 import Router from 'next/router'
 import { toast } from 'react-toastify'
-import { Store } from '../../main/context/store'
+import { Store } from '../contexts/store'
 
 const TOAST_TYPE_MATCH = {
   positive: 'success',
@@ -13,7 +13,7 @@ const TOAST_TYPE_MATCH = {
   ongoing: 'info',
 }
 
-class GatewayClass {
+class Gateway {
   closeDialog: boolean
   minimizeDialog: boolean
 
@@ -42,14 +42,14 @@ class GatewayClass {
     })
   }
 
-  private static _instance: GatewayClass
-  static get instance() {
-    if (!GatewayClass._instance) {
-      GatewayClass._instance = new GatewayClass()
+  private static _instance: Gateway
+  static get i() {
+    if (!Gateway._instance) {
+      Gateway._instance = new Gateway()
     }
-    return GatewayClass._instance
+    return Gateway._instance
   }
-  static set instance(_) {
+  static set i(_) {
     throw new Error('E_READONLY')
   }
 
@@ -180,5 +180,4 @@ class GatewayClass {
   }
 }
 
-const Gateway = GatewayClass.instance as GatewayClass
 export { Gateway }
