@@ -1,24 +1,35 @@
+import { Dialog } from 'contexts/dialog'
 import { ipcRenderer } from 'electron'
+import _ from 'lodash'
+import Router from 'next/router'
+import { toast } from 'react-toastify'
+import { Store } from '../../main/context/store'
 
-export class Gateway {
-  app
-  router
-  closeDialog
-  minimizeDialog
-  constructor(app, router) {
-    this.app = app
-    this.router = router
+const TOAST_TYPE_MATCH = {
+  positive: 'success',
+  negative: 'error',
+  warning: 'warning',
+  info: 'info',
+  ongoing: 'info',
+}
 
+class GatewayClass {
+  closeDialog: boolean
+  minimizeDialog: boolean
+
+  private constructor() {
     this.closeDialog = false
     this.minimizeDialog = false
 
-    this.app.store.commit('gateway/set_app_data', {
-      status: {
-        code: 1, // Connecting to backend
+    Store.update({
+      app: {
+        status: {
+          code: 1, // Connecting to backend
+        },
       },
     })
 
-    ipcRenderer.on('event', (event, data) => {
+    ipcRenderer.on('event', (_, data) => {
       this.receive(data)
     })
 
@@ -31,6 +42,17 @@ export class Gateway {
     })
   }
 
+  private static _instance: GatewayClass
+  static get instance() {
+    if (!GatewayClass._instance) {
+      GatewayClass._instance = new GatewayClass()
+    }
+    return GatewayClass._instance
+  }
+  static set instance(_) {
+    throw new Error('E_READONLY')
+  }
+
   setAutostartSettings(enabled) {
     ipcRenderer.send('autostartSettings', enabled)
   }
@@ -40,30 +62,21 @@ export class Gateway {
       return
     }
     this.closeDialog = true
-    Dialog.create({
+    Dialog.open({
       title: restart ? 'Restart' : 'Exit',
       message: msg,
-      ok: {
-        label: restart ? 'RESTART' : 'EXIT',
-      },
-      cancel: {
-        flat: true,
-        label: 'CANCEL',
-        color:
-          this.app.store.state.gateway.app.config.appearance.theme == 'dark'
-            ? 'white'
-            : 'dark',
-      },
+      ok: restart ? 'RESTART' : 'EXIT',
+      cancel: 'CANCEL',
     })
-      .then(() => {
+    Dialog.once('settle', (res) => {
+      if (res) {
         this.closeDialog = false
-        Loading.hide()
-        this.router.replace({ path: '/quit' })
+        Router.replace('/quit')
         ipcRenderer.send('confirmClose', restart)
-      })
-      .catch(() => {
+      } else {
         this.closeDialog = false
-      })
+      }
+    })
   }
 
   confirmMinimizeTray() {
@@ -71,30 +84,21 @@ export class Gateway {
       return
     }
     this.minimizeDialog = true
-    Dialog.create({
+    Dialog.open({
       title: 'Minimize to tray?',
       message: 'You can change your preference in the setting menu at any time',
-      ok: {
-        label: 'YES',
-      },
-      cancel: {
-        flat: true,
-        label: 'NO',
-        color:
-          this.app.store.state.gateway.app.config.appearance.theme == 'dark'
-            ? 'white'
-            : 'dark',
-      },
+      ok: 'YES',
+      cancel: 'NO',
     })
-      .then(() => {
+    Dialog.once('settle', (res) => {
+      if (res) {
         this.minimizeDialog = false
-        Loading.hide()
         ipcRenderer.send('confirmMinimizeTray', true)
-      })
-      .catch(() => {
+      } else {
         this.minimizeDialog = false
         ipcRenderer.send('confirmMinimizeTray', false)
-      })
+      }
+    })
   }
 
   send(module, method, data = {}) {
@@ -116,36 +120,38 @@ export class Gateway {
 
     switch (message.event) {
       case 'initialize':
-        this.app.store.commit('gateway/set_app_data', {
-          status: {
-            code: 2, // Loading config
+        Store.update({
+          app: {
+            status: {
+              code: 2, // Loading config
+            },
           },
         })
         break
 
       case 'set_app_data':
-        this.app.store.commit('gateway/set_app_data', message.data)
+        Store.update({ app: message.data })
         break
 
       case 'set_daemon_data':
-        this.app.store.commit('gateway/set_daemon_data', message.data)
+        Store.update({ daemon: message.data })
         break
 
       case 'set_pool_data':
-        this.app.store.commit('gateway/set_pool_data', message.data)
+        Store.update({ pool: message.data })
         break
 
       case 'set_wallet_data':
       case 'set_wallet_error':
-        this.app.store.commit('gateway/set_wallet_data', message.data)
+        Store.update({ wallet: message.data })
         break
 
       case 'set_tx_status':
-        this.app.store.commit('gateway/set_tx_status', message.data)
+        Store.update({ tx_status: message.data })
         break
 
       case 'wallet_list':
-        this.app.store.commit('gateway/set_wallet_list', message.data)
+        Store.update({ wallet: message.data })
         break
 
       case 'settings_changed_reboot':
@@ -156,22 +162,23 @@ export class Gateway {
         break
 
       case 'show_notification':
-        let notification = {
-          type: 'positive',
-          timeout: 1000,
-          message: '',
-        }
-        Notify.create(Object.assign(notification, message.data))
+        toast(_.get(message.data, 'message'), {
+          delay: _.get(message.data, 'timeout') ?? 1000,
+          type: TOAST_TYPE_MATCH[_.get(message.data, 'type')] ?? 'success',
+        })
         break
 
       case 'return_to_wallet_select':
-        this.router.replace({ path: '/wallet-select' })
+        Router.replace('/wallet-select')
         setTimeout(() => {
           // short delay to prevent wallet data reaching the
           // websocket moments after we close and reset data
-          this.app.store.dispatch('gateway/resetWalletData')
+          Store.resetWalletData()
         }, 250)
         break
     }
   }
 }
+
+const Gateway = GatewayClass.instance as GatewayClass
+export { Gateway }
