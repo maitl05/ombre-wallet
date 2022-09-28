@@ -62,7 +62,7 @@ export default function Modal({
             open ? 'opacity-100' : 'pointer-events-none opacity-0',
             'transition-opacity duration-300 ease-in-out',
           )}>
-          <div className="text-xl font-bold pb-2">{title}</div>
+          <div className="text-2xl font-bold pb-2">{title}</div>
           {children}
         </div>
       </div>,
