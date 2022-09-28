@@ -4,6 +4,7 @@ import Head from 'next/head'
 import WalletProvider from 'components/WalletProvider'
 
 import '../styles/globals.css'
+import DialogProvider from 'components/DialogProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <WalletProvider>
         <Component {...pageProps} />
       </WalletProvider>
+      <DialogProvider />
     </>
   )
 }
