@@ -36,18 +36,18 @@ export class Daemon {
   checkVersion() {
     return new Promise((resolve, reject) => {
       if (process.platform === 'win32') {
-        let ryod_path = path.join(__ryo_bin, 'ryod.exe')
-        let ryod_version_cmd = `"${ryod_path}" --version`
-        if (!fs.existsSync(ryod_path)) resolve(false)
-        child_process.exec(ryod_version_cmd, (error, stdout, stderr) => {
+        let ombred_path = path.join(__ombre_bin, 'ryod.exe')
+        let ombred_version_cmd = `"${ombred_path}" --version`
+        if (!fs.existsSync(ombred_path)) resolve(false)
+        child_process.exec(ombred_version_cmd, (error, stdout, stderr) => {
           if (error) resolve(false)
           resolve(stdout)
         })
       } else {
-        let ryod_path = path.join(__ryo_bin, 'ryod')
-        let ryod_version_cmd = `"${ryod_path}" --version`
-        if (!fs.existsSync(ryod_path)) resolve(false)
-        child_process.exec(ryod_version_cmd, {}, (error, stdout, stderr) => {
+        let ombred_path = path.join(__ombre_bin, 'ryod')
+        let ombred_version_cmd = `"${ombred_path}" --version`
+        if (!fs.existsSync(ombred_path)) resolve(false)
+        child_process.exec(ombred_version_cmd, {}, (error, stdout, stderr) => {
           if (error) resolve(false)
           resolve(stdout)
         })
@@ -146,13 +146,13 @@ export class Daemon {
         args.push('--testnet')
         args.push(
           '--log-file',
-          path.join(options.app.data_dir, 'testnet', 'logs', 'ryod.log'),
+          path.join(options.app.data_dir, 'testnet', 'logs', 'ombred.log'),
         )
         args.push('--add-peer', '45.77.68.151:13310')
       } else {
         args.push(
           '--log-file',
-          path.join(options.app.data_dir, 'logs', 'ryod.log'),
+          path.join(options.app.data_dir, 'logs', 'ombred.log'),
         )
       }
 
@@ -168,12 +168,12 @@ export class Daemon {
 
       if (process.platform === 'win32') {
         this.daemonProcess = child_process.spawn(
-          path.join(__ryo_bin, 'ryod.exe'),
+          path.join(__ombre_bin, 'ryod.exe'),
           args,
         )
       } else {
         this.daemonProcess = child_process.spawn(
-          path.join(__ryo_bin, 'ryod'),
+          path.join(__ombre_bin, 'ryod'),
           args,
           {
             detached: true,

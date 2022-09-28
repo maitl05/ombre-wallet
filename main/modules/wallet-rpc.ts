@@ -123,12 +123,12 @@ export class WalletRPC {
 
         if (process.platform === 'win32') {
           this.walletRPCProcess = child_process.spawn(
-            path.join(__ryo_bin, 'ryo-wallet-rpc.exe'),
+            path.join(__ombre_bin, 'ryo-wallet-rpc.exe'),
             args,
           )
         } else {
           this.walletRPCProcess = child_process.spawn(
-            path.join(__ryo_bin, 'ryo-wallet-rpc'),
+            path.join(__ombre_bin, 'ryo-wallet-rpc'),
             args,
             {
               detached: true,

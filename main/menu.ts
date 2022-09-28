@@ -35,7 +35,7 @@ let template: Array<MenuItemConstructorOptions | MenuItem> = [
       {
         label: 'Learn More',
         click() {
-          require('electron').shell.openExternal('https://ryo-currency.com/')
+          require('electron').shell.openExternal('http://www.ombre.cash/')
         },
       },
     ],
@@ -44,7 +44,7 @@ let template: Array<MenuItemConstructorOptions | MenuItem> = [
 
 if (process.platform === 'darwin') {
   template.unshift({
-    label: 'Ryo Wallet Atom',
+    label: 'Ombre Wallet Atom',
     submenu: [
       { role: 'about' },
       { type: 'separator' },

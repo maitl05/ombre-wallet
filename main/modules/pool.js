@@ -1,5 +1,3 @@
-// import ryo_utils_promise from "ryo-core-js/ryo_utils/ryo_utils"
-// import * as ryo_utils_nettype from "ryo-core-js/ryo_utils/ryo_utils_nettype"
 import BigInt from 'big-integer'
 import { createServer } from 'net'
 import { join } from 'path'
@@ -40,7 +38,7 @@ export class Pool {
       this.nettype = NetworkType.TESTNET
       logger.setLogFile(join(data_dir, 'testnet', 'logs'), 'pool.log')
     } else {
-      this.nettype = ryo_utils_nettype.network_type.MAINNET
+      this.nettype = NetworkType.MAINNET
       logger.setLogFile(join(data_dir, 'logs'), 'pool.log')
     }
     logger.log('info', 'Logger initialized')

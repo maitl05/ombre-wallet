@@ -9,18 +9,14 @@ require('electron-debug')({
   showDevTools: true,
 })
 
-/**
- * Set `__statics` path to static files in production;
- * The reason we are setting it here is that the path needs to be evaluated at runtime
- */
 if (process.env.PROD) {
-  globalThis.__statics = path.join(__dirname, 'statics').replace(/\\/g, '\\\\')
-  globalThis.__ryo_bin = path
+  globalThis.__ombre_bin = path
     .join(__dirname, '..', 'bin')
     .replace(/\\/g, '\\\\')
 } else {
-  globalThis.__statics = path.join(__dirname, 'statics').replace(/\\/g, '\\\\')
-  globalThis.__ryo_bin = path.join(process.cwd(), 'bin').replace(/\\/g, '\\\\')
+  globalThis.__ombre_bin = path
+    .join(process.cwd(), 'bin')
+    .replace(/\\/g, '\\\\')
 }
 
 let mainWindow, backend, tray
@@ -45,7 +41,6 @@ function createWindow() {
     height: mainWindowState.height,
     minWidth: 640,
     minHeight: 480,
-    icon: path.join(globalThis.__statics, 'icon_64x64.png'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -147,10 +142,10 @@ app.on('ready', () => {
     const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
   } else {
-    tray = new Tray(path.join(globalThis.__statics, 'icon_32x32.png'))
+    tray = new Tray('./main/statics/omb-small.png')
     const contextMenu = Menu.buildFromTemplate([
       {
-        label: 'Show Ryo Wallet',
+        label: 'Show Ombre Wallet',
         click: function () {
           if (mainWindow.isMinimized()) mainWindow.minimize()
           else mainWindow.show()
@@ -158,7 +153,7 @@ app.on('ready', () => {
         },
       },
       {
-        label: 'Exit Ryo Wallet',
+        label: 'Exit Ombre Wallet',
         click: function () {
           if (mainWindow.isMinimized()) mainWindow.minimize()
           else mainWindow.show()
@@ -214,4 +209,6 @@ app.on('before-quit', () => {
   }
 })
 
-app.on('quit', () => {})
+app.on('quit', () => {
+  app.quit
+})

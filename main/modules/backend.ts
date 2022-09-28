@@ -27,10 +27,10 @@ export class Backend {
 
   init() {
     if (os.platform() == 'win32') {
-      this.config_dir = 'C:\\ProgramData\\ryo'
-      //this.config_dir = path.join(os.homedir(), "ryo");
+      this.config_dir = 'C:\\ProgramData\\ombre'
+      //this.config_dir = path.join(os.homedir(), "ombre");
     } else {
-      this.config_dir = path.join(os.homedir(), '.ryo')
+      this.config_dir = path.join(os.homedir(), '.ombre')
     }
 
     if (!fs.existsSync(this.config_dir)) {
@@ -62,7 +62,7 @@ export class Backend {
       },
 
       daemon: {
-        type: 'local_remote',
+        type: 'remote',
         remote_host: 'wallet-node.ryo-currency.com',
         remote_port: 12211,
         p2p_bind_ip: '0.0.0.0',
@@ -326,6 +326,8 @@ export class Backend {
         this.config_data.daemon.remote_host = remote_host
       }
 
+      // console.log('backend startup 9')
+
       // save config file back to file, so updated options are stored on disk
       fs.writeFileSync(
         this.config_file,
@@ -428,7 +430,7 @@ export class Backend {
 
       this.daemon = new Daemon(this)
       this.walletd = new WalletRPC(this)
-      this.pool = new Pool(this)
+      // this.pool = new Pool(this)
 
       this.send('set_app_data', {
         status: {
@@ -456,7 +458,7 @@ export class Backend {
             this.send('show_notification', {
               type: 'warning',
               textColor: 'black',
-              message: 'Warning: ryod not found, using remote node',
+              message: 'Warning: ombred not found, using remote node',
               timeout: 2000,
             })
           }

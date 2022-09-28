@@ -1,5 +1,5 @@
 declare global {
-  var __ryo_bin: string
+  var __ombre_bin: string
 }
 
 export {}
