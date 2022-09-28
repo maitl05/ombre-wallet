@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import LoadingOverlay from 'components/LoadingOverlay'
+import { ipcRenderer } from 'electron'
+import { Dialog } from 'contexts/dialog'
 
 //TODO: this page checks for existence of config file for user and if
 //TODO: it doesn't find one redirects to welcome page otherwise
@@ -15,6 +17,23 @@ function Index() {
   setTimeout(() => {
     setIsConnected(true)
   }, 3000)
+
+  useEffect(() => {
+    ipcRenderer.on('confirmClose', () => {
+      console.log('hi')
+      Dialog.open({
+        message: 'Are you sure you want to exit?',
+        title: 'Exit',
+        ok: 'Exit',
+        cancel: 'Cancel',
+      })
+      Dialog.once('settle', (value) => {
+        if (value) {
+          ipcRenderer.send('confirmClose', true)
+        }
+      })
+    })
+  }, [])
 
   useEffect(() => {
     if (isConnected) {
