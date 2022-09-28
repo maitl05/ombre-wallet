@@ -27,6 +27,7 @@
     "electron-serve": "^1.1.0",
     "electron-store": "^8.0.1",
     "electron-window-state": "5.0.2",
+    "events": "^3.3.0",
     "lodash": "^4.17.21",
     "promise-queue": "^2.2.5",
     "react-jazzicon": "^1.0.4",
@@ -36,6 +37,7 @@
     "rotating-file-stream": "1.4.1"
   },
   "devDependencies": {
+    "@types/events": "^3.0.0",
     "@types/node": "16.11.1",
     "@types/react": "^18.0.8",
     "@types/request": "^2.48.8",
