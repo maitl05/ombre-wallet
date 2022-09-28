@@ -4,7 +4,7 @@ import { TypedEventEmitter } from '../../main/types/utils'
 
 export type DialogEventDetail = { open: DialogParams; settle: boolean }
 
-export class DialogClass extends EventEmitter {
+class DialogClass extends EventEmitter {
   private constructor() {
     super()
   }
