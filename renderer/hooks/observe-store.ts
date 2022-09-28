@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { Store } from '../contexts/store'
-import { StoreState } from '../types/Store'
+import { StoreState } from 'types/Store'
 
 export function useStore<K extends keyof StoreState, R = StoreState[K]>(
   keyToObserve: K,
