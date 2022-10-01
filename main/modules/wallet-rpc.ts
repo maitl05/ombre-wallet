@@ -738,7 +738,7 @@ export class WalletRPC {
           Promise.all(actions).then((data) => {
             for (let n of data) {
               Object.keys(n).map((key) => {
-                wallet[key] = Object.assign(wallet[key], n[key])
+                wallet[key] = Object.assign(wallet[key] ?? {}, n[key])
               })
             }
             this.sendGateway('set_wallet_data', wallet)

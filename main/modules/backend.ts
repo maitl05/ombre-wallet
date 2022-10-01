@@ -153,7 +153,7 @@ export class Backend {
         // save only partial config settings
         Object.keys(params).map((key) => {
           this.config_data[key] = Object.assign(
-            this.config_data[key],
+            this.config_data[key] ?? {},
             params[key],
           )
         })
@@ -183,7 +183,7 @@ export class Backend {
         delete params.pool
         Object.keys(params).map((key) => {
           this.config_data[key] = Object.assign(
-            this.config_data[key],
+            this.config_data[key] ?? {},
             params[key],
           )
         })
@@ -210,7 +210,7 @@ export class Backend {
       case 'save_pool_config':
         Object.keys(params).map((key) => {
           this.config_data.pool[key] = Object.assign(
-            this.config_data.pool[key],
+            this.config_data.pool[key] ?? {},
             params[key],
           )
         })
@@ -299,7 +299,7 @@ export class Backend {
       Object.keys(disk_config_data).map((key) => {
         if (!this.config_data.hasOwnProperty(key)) this.config_data[key] = {}
         this.config_data[key] = Object.assign(
-          this.config_data[key],
+          this.config_data[key] ?? {},
           disk_config_data[key],
         )
       })
