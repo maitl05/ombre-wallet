@@ -4,6 +4,9 @@ import LoadingOverlay from 'components/LoadingOverlay'
 import { ipcRenderer } from 'electron'
 import { Dialog } from 'contexts/dialog'
 import { useStore } from 'hooks/observe-store'
+import { AppStatus } from 'types/Store'
+import { Gateway } from 'gateway'
+import { Store } from 'contexts/store'
 
 //TODO: this page checks for existence of config file for user and if
 //TODO: it doesn't find one redirects to welcome page otherwise
@@ -44,14 +47,13 @@ function Index() {
 
   const isFirstBoot = useStore(
     'app',
-    (e) => e.status.code,
-    //  !== undefined && e.status.code == AppStatus.FirstBoot,
+    (e) => e.status.code !== undefined && e.status.code == AppStatus.FirstBoot,
   )
 
   useEffect(() => {
-    // if (isFirstBoot) {
-    //   Gateway.i.send('core', 'save_config_init', Store.state)
-    // }
+    if (isFirstBoot) {
+      Gateway.i.send('core', 'save_config_init', Store.state)
+    }
   }, [isFirstBoot])
 
   return (

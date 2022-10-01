@@ -126,7 +126,7 @@ function createWindow() {
     }
   })
 
-  mainWindow.webContents.on('did-finish-load', () => {
+  ipcMain.on('isReady', () => {
     backend = new Backend(mainWindow)
     backend.init()
   })
