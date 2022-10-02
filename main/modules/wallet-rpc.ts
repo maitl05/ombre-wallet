@@ -127,8 +127,12 @@ export class WalletRPC {
             args,
           )
         } else {
+          let bin = 'ryo-wallet-rpc'
+          if (process.platform === 'darwin') {
+            bin = 'ryo-wallet-rpc-darwin'
+          }
           this.walletRPCProcess = child_process.spawn(
-            path.join(__ombre_bin, 'ryo-wallet-rpc'),
+            path.join(__ombre_bin, bin),
             args,
             {
               detached: true,
