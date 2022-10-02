@@ -2,9 +2,9 @@ import _ from 'lodash'
 import { storeDefaultState } from '../static/store-defaults'
 import { StoreState } from '../types/Store'
 import { EventEmitter } from 'events'
-import { DeepPartial, TypedEventEmitter } from 'types/utils'
+import { DeepPartial, Subscribable } from 'types/utils'
 
-class StoreClass extends EventEmitter {
+class StoreClass extends Subscribable<StoreState> {
   private constructor() {
     super()
   }
@@ -32,7 +32,7 @@ class StoreClass extends EventEmitter {
     const res = {}
     _.merge(res, this._state, value)
     this._state = res as StoreState
-    _.keys(value).forEach((key) => this.emit(key, res[key]))
+    _.keys(value).forEach((key) => this.emit(key as keyof StoreState, res[key]))
   }
 
   get isReady() {
@@ -130,6 +130,5 @@ class StoreClass extends EventEmitter {
   }
 }
 
-const Store = StoreClass.instance as StoreClass &
-  TypedEventEmitter<StoreClass, StoreState>
+const Store = StoreClass.instance
 export { Store }

@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       ipcRenderer.send('isReady')
       setIsReady(true)
     }
-  })
+  }, [])
   if (!isReady) {
     return null
   }

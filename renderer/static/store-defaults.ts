@@ -1,6 +1,6 @@
 import { AppStatus, StoreState } from '../types/Store'
 
-export const storeDefaultState: StoreState = {
+export const storeDefaultState = {
   app: {
     status: {
       code: AppStatus.ConnectingToBackend,
@@ -94,4 +94,4 @@ export const storeDefaultState: StoreState = {
     blocks: [],
     workers: [],
   },
-}
+} as StoreState
