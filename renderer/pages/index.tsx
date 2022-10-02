@@ -24,7 +24,6 @@ function Index() {
 
   useEffect(() => {
     ipcRenderer.on('confirmClose', () => {
-      console.log('hi')
       Dialog.open({
         message: 'Are you sure you want to exit?',
         title: 'Exit',
