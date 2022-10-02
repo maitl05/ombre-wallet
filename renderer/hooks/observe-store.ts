@@ -17,11 +17,7 @@ export function useStore<K extends keyof StoreState, R = StoreState[K]>(
         return _.isEqual(prev, res) ? prev : res
       })
     }
-    Store.on(keyToObserve, listener)
-
-    return () => {
-      Store.off(keyToObserve, listener)
-    }
+    return Store.on(keyToObserve, listener)
   }, [Store])
 
   return state
