@@ -5,6 +5,9 @@ import { EventEmitter } from 'events'
 import { DeepPartial, Subscribable } from 'types/utils'
 
 class StoreClass extends Subscribable<StoreState> {
+  protected _preEmit<K extends keyof StoreState>(s: K, v: StoreState[K]): void {
+    //
+  }
   private constructor() {
     super()
   }

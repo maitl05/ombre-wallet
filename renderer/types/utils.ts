@@ -34,7 +34,11 @@ export class Subscribable<
   protected off<K extends keyof E>(s: K, listener: (v: E[K]) => void): void {
     this.emitter.off(s as string | symbol, listener)
   }
+  protected _preEmit<K extends keyof E>(s: K, v: E[K]): void {
+    //
+  }
   protected emit<K extends keyof E>(s: K, v: E[K]): void {
+    this._preEmit(s, v)
     this.emitter.emit(s as string | symbol, v)
   }
 }
