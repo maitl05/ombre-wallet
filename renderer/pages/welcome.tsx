@@ -13,8 +13,8 @@ function WelcomePage() {
     <div className="absolute inset-0 children:absolute children:inset-0">
       <canvas ref={canvas} />
       <canvas ref={canvas2} />
-      <div className="flex flex-col gap-12 items-center justify-center">
-        <img src="/images/logo.svg" className="opacity-50 h-32 object-cover" />
+      <div className="flex flex-col gap-12 items-center justify-center drop-shadow-lg shadow-black">
+        <img src="/images/logo.svg" className="opacity-70 h-32 object-cover" />
         <div className="text-2xl">welcome to Ombre wallet</div>
         <Button
           btnType="secondary"

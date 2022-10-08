@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { RefObject, useEffect } from 'react'
 
 function getMaxColumns(w: number, fontSize: number) {
@@ -54,24 +55,29 @@ class Point {
     private ctx2: CanvasRenderingContext2D,
     private fontSize: number,
     private dimensions: Dimensions,
-  ) {}
+  ) {
+    this.setSpeed()
+  }
+
+  private setSpeed() {
+    this.speed = randomFloat(1, 5)
+  }
 
   public draw() {
     this.value = CHAR_ARR[randomInt(0, CHAR_ARR.length - 1)].toUpperCase()
-    this.speed = randomFloat(1, 5)
 
-    this.ctx2.fillStyle = 'rgba(255,255,255,0.8)'
+    this.ctx2.fillStyle = 'rgba(255,255,255,0.6)'
     this.ctx2.font = this.fontSize + 'px san-serif'
     this.ctx2.fillText(this.value, this.x, this.y)
 
-    this.ctx.fillStyle = '#4fbafa'
+    this.ctx.fillStyle = '#4fbafa88'
     this.ctx.font = this.fontSize + 'px san-serif'
     this.ctx.fillText(this.value, this.x, this.y)
 
     this.y += this.speed
     if (this.y > this.dimensions.h) {
       this.y = randomFloat(-100, 0)
-      this.speed = randomFloat(2, 5)
+      this.setSpeed()
     }
   }
 }
@@ -86,32 +92,36 @@ export function useMatrixEffect(
       h: 0,
     }
 
-    function handleResize() {
-      dimensions.w = canvas.current.parentElement.clientWidth
-      dimensions.h = canvas.current.parentElement.clientHeight
-      canvas.current.width = canvas2.current.width = dimensions.w
-      canvas.current.height = canvas2.current.height = dimensions.h
-    }
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
     const ctx = canvas.current.getContext('2d'),
       ctx2 = canvas2.current.getContext('2d'),
       fallingCharArr = [],
       fontSize = 10
 
-    for (var i = 0; i < getMaxColumns(dimensions.w, fontSize); i++) {
-      fallingCharArr.push(
-        new Point(
-          i * fontSize,
-          randomFloat(-500, 0),
-          ctx,
-          ctx2,
-          fontSize,
-          dimensions,
-        ),
-      )
+    function handleResize() {
+      dimensions.w = canvas.current.parentElement.clientWidth
+      dimensions.h = canvas.current.parentElement.clientHeight
+      canvas.current.width = canvas2.current.width = dimensions.w
+      canvas.current.height = canvas2.current.height = dimensions.h
+
+      fallingCharArr.length = 0
+
+      for (var i = 0; i < getMaxColumns(dimensions.w, fontSize); i++) {
+        _.times(2, () =>
+          fallingCharArr.push(
+            new Point(
+              i * fontSize,
+              randomFloat(-1 * dimensions.h, 0),
+              ctx,
+              ctx2,
+              fontSize,
+              dimensions,
+            ),
+          ),
+        )
+      }
     }
+    window.addEventListener('resize', handleResize)
+    handleResize()
 
     var update = function () {
       ctx.fillStyle = '#39393933'
