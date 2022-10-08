@@ -7,7 +7,7 @@ export type ButtonProps = {
   className?: ClassName
   btnType?: 'primary' | 'secondary' | 'danger'
   disabled?: boolean
-  job?: () => Promise<void> | void
+  job?: () => Promise<unknown> | unknown
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export default function Button({
@@ -22,30 +22,42 @@ export default function Button({
   return (
     <button
       className={cn(
-        'shadow-xl shadow-[#0003] rounded-full px-6 py-3 transition-colors cursor-pointer text-text-primary',
-        !isLoading && 'hover:text-text-primary-50',
+        'relative',
+        'shadow-xl shadow-[#0003] rounded-full px-6 py-3 transition-colors cursor-pointer',
+        !isLoading && !disabled && 'hover:text-text-primary-50',
         btnType === 'primary' &&
           cn(
-            'border-primary-500 border-2 border-opacity-30 bg-opacity-80 font-semibold text-text-secondary',
-            !isLoading && 'hover:bg-primary-700 hover:text-text-secondary',
+            'border-primary-500 border-2 border-opacity-30 font-semibold text-text-secondary',
+            !isLoading &&
+              !disabled &&
+              'hover:bg-primary-700 hover:text-text-secondary bg-opacity-80',
           ),
         btnType === 'secondary' &&
           cn(
             'bg-secondary-300 text-text-primary-900',
-            !isLoading && 'hover:bg-secondary-200 hover:text-text-primary-900',
+            !isLoading &&
+              !disabled &&
+              'hover:bg-secondary-200 hover:text-text-primary-900',
           ),
         'disabled:text-text-secondary disabled:bg-opacity-30 disabled:cursor-not-allowed',
-        isLoading && 'text-opacity-0 bg-opacity-40 cursor-not-allowed',
+        isLoading &&
+          '!text-opacity-0 !text-black bg-opacity-0 cursor-not-allowed',
         className,
       )}
+      disabled={disabled || isLoading}
       onClick={async () => {
+        if (isLoading || disabled) {
+          return
+        }
         setIsLoading(true)
-        !disabled && (await job?.())
+        await job?.()
         setIsLoading(false)
       }}
       {...props}>
       {children}
-      <LoadingOverlay visible={isLoading} />
+      <div className="absolute pointer-events-none inset-0 flex justify-center items-center">
+        <LoadingOverlay visible={isLoading} />
+      </div>
     </button>
   )
 }
