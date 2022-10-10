@@ -9,10 +9,11 @@ import { StoreState } from 'types/Store'
 import { Gateway } from 'gateway'
 import { setRecordState } from 'helpers/setRecordState'
 
-export type PreferencesProps = { open: boolean }
+export type PreferencesProps = { open: boolean; initConfig?: boolean }
 
 export default function Preferences({
   open,
+  initConfig = false,
 }: PreferencesProps): React.ReactElement {
   const [render, setRender] = useState(false)
   const [openModal, setOpenModal] = useState(open)
@@ -27,7 +28,6 @@ export default function Preferences({
 
   useEffect(() => {
     if (config) {
-      console.log('this is data', config)
       setPendingConfig(config)
       setRender(true)
     }
@@ -79,7 +79,11 @@ export default function Preferences({
               btnType="secondary"
               disabled={hasError.some(_.identity)}
               job={() => {
-                Gateway.i.send('core', 'save_config', pendingConfig)
+                Gateway.i.send(
+                  'core',
+                  initConfig ? 'save_config_init' : 'save_config',
+                  pendingConfig,
+                )
               }}>
               save
             </Button>
