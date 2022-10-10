@@ -18,6 +18,10 @@ export enum AppStatus {
 }
 
 export type StoreState = {
+  app: { pending_config: StoreStateSingle }
+} & StoreStateSingle
+
+type StoreStateSingle = {
   app: {
     status: {
       code: AppStatus
@@ -25,19 +29,7 @@ export type StoreState = {
       ws_bind_port: number
       testnet: boolean
     }
-    config: {
-      preference: {
-        notify_no_payment_id: boolean
-        notify_empty_password: boolean
-        minimize_to_tray: boolean
-        timeout: number
-      }
-      daemon: {
-        type: 'remote' | 'local' | 'local_remote'
-      }
-    }
 
-    pending_config: {}
     network_interfaces: [
       {
         address: string
