@@ -127,8 +127,10 @@ function createWindow() {
   })
 
   ipcMain.on('isReady', () => {
-    backend = new Backend(mainWindow)
-    backend.init()
+    if (!backend) {
+      backend = new Backend(mainWindow)
+      backend.init()
+    }
   })
 
   const port = process.argv[2]
