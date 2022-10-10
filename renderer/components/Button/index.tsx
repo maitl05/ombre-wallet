@@ -27,6 +27,7 @@ export default function Button({
         !isLoading && !disabled && 'hover:text-text-primary-50',
         btnType === 'primary' &&
           cn(
+            'disabled:text-text-primary-400 disabled:bg-primary-600',
             'border-primary-500 border-2 border-opacity-30 font-semibold text-text-secondary',
             !isLoading &&
               !disabled &&
@@ -34,12 +35,13 @@ export default function Button({
           ),
         btnType === 'secondary' &&
           cn(
+            'disabled:text-text-primary-400 disabled:bg-primary-600',
             'bg-secondary-300 text-text-primary-900',
             !isLoading &&
               !disabled &&
               'hover:bg-secondary-200 hover:text-text-primary-900',
           ),
-        'disabled:text-text-secondary disabled:bg-opacity-30 disabled:cursor-not-allowed',
+        'disabled:bg-opacity-30 disabled:cursor-not-allowed',
         isLoading &&
           '!text-opacity-0 !text-black bg-opacity-0 cursor-not-allowed',
         className,
