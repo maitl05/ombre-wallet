@@ -16,6 +16,7 @@ export default function Modal({
   open,
   onClose,
   children,
+  className,
 }: ModalProps): React.ReactElement {
   const [loaded, setLoaded] = useState(false)
   function escHandler({ key }) {
@@ -61,6 +62,7 @@ export default function Modal({
             'fixed flex flex-col bg-primary-800 shadow-lg max-w-screen-sm p-5 rounded-lg gap-3 border-primary-300 border-2',
             open ? 'opacity-100' : 'pointer-events-none opacity-0',
             'transition-opacity duration-300 ease-in-out',
+            className,
           )}>
           <div className="text-2xl font-bold pb-2">{title}</div>
           {children}
