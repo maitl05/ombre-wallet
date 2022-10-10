@@ -63,7 +63,9 @@ export default function Input({
           _.isEmpty(value)
             ? 'border-primary-400'
             : _.isEmpty(error)
-            ? 'border-secondary-300'
+            ? isFocused
+              ? 'border-secondary-400'
+              : 'border-primary-200'
             : 'border-error-400 bg-opacity-40',
           className?.input,
         )}
