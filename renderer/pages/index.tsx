@@ -15,12 +15,7 @@ import { Store } from 'contexts/store'
 //TODO debug
 
 function Index() {
-  const [isConnected, setIsConnected] = React.useState(false)
   const router = useRouter()
-  //TODO check for config file and redirect
-  setTimeout(() => {
-    setIsConnected(true)
-  }, 3000)
 
   useEffect(() => {
     ipcRenderer.on('confirmClose', () => {
@@ -38,22 +33,21 @@ function Index() {
     })
   }, [])
 
-  useEffect(() => {
-    if (isConnected) {
-      router.push('/wallet-select')
-    }
-  }, [isConnected])
-
-  const isFirstBoot = useStore(
+  const status = useStore(
     'app',
-    (e) => e.status.code !== undefined && e.status.code == AppStatus.FirstBoot,
+    (e) => e.status.code !== undefined && e.status.code,
   )
 
   useEffect(() => {
-    if (isFirstBoot) {
-      Gateway.i.send('core', 'save_config_init', Store.state)
+    switch (status) {
+      case AppStatus.FirstBoot:
+        router.push('/welcome')
+        break
+      case AppStatus.WalletSelect:
+        router.push('/wallet-select')
+        break
     }
-  }, [isFirstBoot])
+  }, [status])
 
   return (
     <>
