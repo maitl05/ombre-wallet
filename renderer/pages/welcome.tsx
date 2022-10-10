@@ -1,13 +1,22 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMatrixEffect } from 'hooks/matrix-effect'
 import Button from 'components/Button'
+import Preferences from 'components/Preferences'
 
 function WelcomePage() {
   const canvas = useRef<HTMLCanvasElement>(null)
   const canvas2 = useRef<HTMLCanvasElement>(null)
   useMatrixEffect(canvas, canvas2)
   const router = useRouter()
+  const [initConfigState, setInitConfigState] = useState<
+    'undone' | 'doing' | 'done'
+  >('undone')
+  useEffect(() => {
+    if (initConfigState === 'done') {
+      router.push('/')
+    }
+  }, [initConfigState])
 
   return (
     <div className="absolute inset-0 children:absolute children:inset-0">
@@ -19,10 +28,15 @@ function WelcomePage() {
         <Button
           btnType="secondary"
           job={() => {
-            throw new Error('not implemented')
+            setInitConfigState('doing')
           }}>
           proceed
         </Button>
+        <Preferences
+          open={initConfigState === 'doing'}
+          onClose={() => setInitConfigState('done')}
+          initConfig
+        />
       </div>
     </div>
   )
