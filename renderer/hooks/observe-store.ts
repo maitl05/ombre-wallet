@@ -6,11 +6,11 @@ import { StoreState } from 'types/Store'
 export function useStore<K extends keyof StoreState, R = StoreState[K]>(
   keyToObserve: K,
   selector?: (value: StoreState[K]) => R,
-)
+): R
 export function useStore<R = StoreState>(
   keyToObserve: '*',
   selector?: (value: StoreState) => R,
-)
+): R
 export function useStore<K extends keyof StoreState, R = StoreState[K]>(
   keyToObserve: K | '*',
   selector: (value: StoreState[K] | StoreState) => R = _.identity,
