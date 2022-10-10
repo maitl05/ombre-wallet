@@ -8,6 +8,7 @@ export type InputProps = {
   validator?: (value: string) => string | undefined
   value?: string
   label?: string
+  onErrorStateChange?: (hasError: boolean) => void
 } & Omit<
   React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -24,15 +25,21 @@ export default function Input({
   onKeyDown,
   label,
   onBlur,
+  onFocus,
+  onErrorStateChange,
   ...props
 }: InputProps): React.ReactElement | null {
   const [value, setValue] = useState(_value ?? '')
   const [error, setError] = useState<string | undefined>(undefined)
   const [notChangedYet, setNotChangedYet] = useState(true)
+  const [isFocused, setIsFocused] = useState(false)
   useEffect(() => {
+    const _err = validator?.(value ?? '')
+
     if (!notChangedYet) {
-      setError(validator?.(value ?? ''))
+      setError(_err)
     }
+    onErrorStateChange?.(!!_err?.length)
   }, [value, validator])
 
   return (
@@ -43,9 +50,9 @@ export default function Input({
       )}>
       <div
         className={cn(
-          'absolute -z-[1] transition-all duration-300 ml-3 subpixel-antialiased opacity-50',
+          'absolute -z-[1] transition-all duration-300 subpixel-antialiased opacity-50 p-1 ml-1',
           !_.isEmpty(value) &&
-            '-translate-y-6 translate-x-2 transform-gpu z-20 bg-primary-800 text-sm rounded-full shadow-sm subpixel-antialiased opacity-100',
+            '-translate-y-6 translate-x-1 transform-gpu z-20 bg-primary-800 text-sm rounded-full shadow-sm subpixel-antialiased opacity-100',
         )}>
         {label}
       </div>
@@ -71,12 +78,20 @@ export default function Input({
             setValue(e.target.value)
           }
         }}
+        onFocus={(e) => {
+          setIsFocused(true)
+          onFocus?.(e)
+        }}
+        onBlur={(e) => {
+          setIsFocused(false)
+          onBlur?.(e)
+        }}
         {...props}
       />
       <div
         className={cn(
-          'absolute top-0 right-0 left-0 w-1/2 max-w-lg min-w-min -translate-y-full bg-primary-800 border border-error-200 rounded-lg flex justify-center p-1 text-sm',
-          error && !_.isEmpty(value)
+          'absolute top-full translate-y-1 right-0 left-0 w-1/2 max-w-lg min-w-fit bg-primary-800 border border-error-200 rounded-lg flex justify-center p-1 text-sm z-40',
+          error && !_.isEmpty(value) && isFocused
             ? 'transition-opacity opacity-100'
             : 'opacity-0',
         )}>
