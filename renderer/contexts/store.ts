@@ -5,7 +5,10 @@ import { EventEmitter } from 'events'
 import { DeepPartial, Subscribable } from 'types/utils'
 
 class StoreClass extends Subscribable<StoreState> {
-  protected _preEmit<K extends keyof StoreState>(s: K, v: StoreState[K]): void {
+  protected _preEmit<K extends keyof StoreState>(
+    s: K | '*',
+    v: StoreState[K],
+  ): void {
     //
   }
   private constructor() {
@@ -36,6 +39,7 @@ class StoreClass extends Subscribable<StoreState> {
     _.merge(res, this._state, value)
     this._state = res as StoreState
     _.keys(value).forEach((key) => this.emit(key as keyof StoreState, res[key]))
+    this.emit('*', res as StoreState)
   }
 
   get isReady() {
