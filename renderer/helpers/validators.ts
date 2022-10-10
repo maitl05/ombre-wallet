@@ -68,3 +68,13 @@ export const addressValidator: ValidatorFunction = (value) => {
       return 'Invalid Address'
   }
 }
+
+export const portValidator: ValidatorFunction = (value) => {
+  if (String(parseInt(value)) !== String(value)) {
+    return 'Port must be number'
+  } else if (parseInt(value) < 1024 || parseInt(value) > 65535) {
+    return 'Port must be in range'
+  } else {
+    return undefined
+  }
+}
