@@ -9,14 +9,18 @@ import { StoreState } from 'types/Store'
 import { Gateway } from 'gateway'
 import { setRecordState } from 'helpers/setRecordState'
 
-export type PreferencesProps = { open: boolean; initConfig?: boolean }
+export type PreferencesProps = {
+  open: boolean
+  initConfig?: boolean
+  onClose: () => void
+}
 
 export default function Preferences({
   open,
+  onClose,
   initConfig = false,
 }: PreferencesProps): React.ReactElement {
   const [render, setRender] = useState(false)
-  const [openModal, setOpenModal] = useState(open)
 
   const config = useStore('*', (e) => {
     const res = {}
@@ -35,10 +39,10 @@ export default function Preferences({
 
   return (
     <>
-      {render && open ? (
+      {render ? (
         <Modal
           className={'w-1/2'}
-          open={openModal}
+          open={open}
           onClose={() => {}}
           title="Settings">
           <div className="flex flex-col justify-center gap-5">
@@ -71,7 +75,7 @@ export default function Preferences({
               btnType="primary"
               disabled={hasError.some(_.identity)}
               job={() => {
-                setOpenModal(false)
+                onClose()
               }}>
               cancel
             </Button>
@@ -84,6 +88,7 @@ export default function Preferences({
                   initConfig ? 'save_config_init' : 'save_config',
                   pendingConfig,
                 )
+                onClose()
               }}>
               save
             </Button>
