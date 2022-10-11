@@ -38,7 +38,7 @@ export default function Address({
         </div>
       </div>
       <Button
-        className="!py-2 !px-3 !rounded-xl mt-auto"
+        className="!py-2 !px-3 !rounded-xl mt-auto ml-auto"
         btnType="primary"
         job={() => {
           navigator.clipboard.writeText(address)
