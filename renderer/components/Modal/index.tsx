@@ -43,13 +43,13 @@ export default function Modal({
     return ReactDOM.createPortal(
       <div
         className={cn(
-          'absolute top-0 left-0 w-full h-full flex items-center justify-center inset-0',
+          'fixed top-0 left-0 w-full h-full flex items-center justify-center inset-0',
           !open && 'pointer-events-none',
         )}>
         {/* backdrop */}
         <div
           className={cn(
-            'absolute bg-black inset-0',
+            'fixed bg-black inset-0',
             open ? 'opacity-50' : 'pointer-events-none opacity-0',
             'transition-opacity duration-300 ease-in-out',
           )}
