@@ -16,7 +16,7 @@ function handleExternalLink(address: string): void {
   shell.openExternal(address)
 }
 
-export default function WalletHeader({
+export default function WalletFooter({
   className,
 }: WalletFooterProps): React.ReactElement | null {
   const { wallet } = useContext(WalletCtx)
