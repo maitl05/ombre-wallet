@@ -48,14 +48,16 @@ export default function Input({
         'relative flex min-w-min w-full justify-start items-center',
         className?.container,
       )}>
-      <div
-        className={cn(
-          'absolute -z-[1] transition-all duration-300 subpixel-antialiased opacity-50 p-1 ml-1',
-          !_.isEmpty(value) &&
-            '-translate-y-6 translate-x-1 transform-gpu z-20 bg-primary-800 text-sm rounded-full shadow-sm subpixel-antialiased opacity-100',
-        )}>
-        {label}
-      </div>
+      {!_.isEmpty(label) && (
+        <div
+          className={cn(
+            'absolute -z-[1] transition-all duration-300 subpixel-antialiased opacity-50 p-1 ml-1',
+            !_.isEmpty(value) &&
+              '-translate-y-6 translate-x-1 transform-gpu z-20 bg-primary-800 text-sm rounded-full shadow-sm subpixel-antialiased opacity-100',
+          )}>
+          {label}
+        </div>
+      )}
       <input
         className={cn(
           'p-2 bg-transparent border-2 rounded-md min-w-min w-full',
