@@ -224,7 +224,7 @@ export class Backend {
             this.send('set_app_data', {
               config: this.config_data,
             })
-            this.pool.init(this.config_data)
+            // this.pool.init(this.config_data)
           },
         )
         break
@@ -327,8 +327,6 @@ export class Backend {
         remote_host = remote_host.join('//')
         this.config_data.daemon.remote_host = remote_host
       }
-
-      // console.log('backend startup 9')
 
       // save config file back to file, so updated options are stored on disk
       fs.writeFileSync(
@@ -550,7 +548,7 @@ export class Backend {
 
                     this.walletd.listWallets(true)
 
-                    this.pool.init(this.config_data)
+                    // this.pool.init(this.config_data)
 
                     this.send('set_app_data', {
                       status: {
