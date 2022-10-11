@@ -32,6 +32,16 @@ type StoreStateSingle = {
       code: AppStatus
     }
 
+    config: {
+      preference: {
+        notify_no_payment_id: boolean
+        notify_empty_password: boolean
+        minimize_to_tray: boolean
+        autostart: boolean
+        timeout: number
+      }
+    }
+
     network_interfaces: [
       {
         address: string
@@ -42,13 +52,6 @@ type StoreStateSingle = {
         label: string
       },
     ]
-  }
-  preference: {
-    notify_no_payment_id: boolean
-    notify_empty_password: boolean
-    minimize_to_tray: boolean
-    autostart: boolean
-    timeout: number
   }
 
   wallets: {
