@@ -23,11 +23,12 @@ export type StoreState = {
 
 type StoreStateSingle = {
   app: {
+    data_dir: string
+    ws_bind_port: number
+    testnet: boolean
+
     status: {
       code: AppStatus
-      data_dir: string
-      ws_bind_port: number
-      testnet: boolean
     }
 
     network_interfaces: [
