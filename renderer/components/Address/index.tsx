@@ -6,6 +6,7 @@ import Card from 'components/Card'
 import Button from 'components/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
+import { Gateway } from 'gateway'
 
 export type AddressProps = {
   className?: ClassName
@@ -24,17 +25,30 @@ export default function Address({
 }: AddressProps): React.ReactElement | null {
   return (
     <Card
-      onClick={onClick}
-      className={cn('w-full flex gap-3 break-all', className)}>
-      <AddressPhoto address={address} dimensions="4rem" />
-      <div className="flex flex-col">
-        {name && <span className="text-2xl">{name}</span>}
-        <span>{address}</span>
-        {addressLabel && <span>{addressLabel}</span>}
+      className={cn(
+        'w-full flex items-center gap-3 break-all transition-colors hover:bg-primary-600',
+        className,
+      )}>
+      <div className="contents cursor-pointer" onClick={onClick}>
+        <AddressPhoto address={address} dimensions="4rem" />
+        <div className="flex flex-col">
+          {name && <span className="text-2xl">{name}</span>}
+          <span>{address}</span>
+          {addressLabel && <span>{addressLabel}</span>}
+        </div>
       </div>
       <Button
+        className="!py-2 !px-3 !rounded-xl mt-auto"
+        btnType="primary"
         job={() => {
           navigator.clipboard.writeText(address)
+          Gateway.i.receive({
+            event: 'show_notification',
+            data: {
+              message: 'address copied to clipboard',
+              timeout: 1000,
+            },
+          })
         }}>
         <FontAwesomeIcon icon={faClipboard} />
       </Button>
