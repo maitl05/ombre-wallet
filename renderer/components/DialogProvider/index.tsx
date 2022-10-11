@@ -46,6 +46,7 @@ export default function DialogProvider({ children }: DialogProviderProps) {
       {dialogParams.message}
       {dialogParams.prompt && (
         <Input
+          autoFocus
           type={dialogParams.prompt.type}
           value={dialogParams.prompt.value}
           onBlur={(e) => {
