@@ -5,9 +5,8 @@ import { ipcRenderer } from 'electron'
 import { Dialog } from 'contexts/dialog'
 import { useStore } from 'hooks/observe-store'
 import { AppStatus } from 'types/Store'
-import { Gateway } from 'gateway'
-import { Store } from 'contexts/store'
 import _ from 'lodash'
+import MatrixEffect from 'components/MatrixEffect'
 
 function Index() {
   const router = useRouter()
@@ -72,18 +71,18 @@ function Index() {
       case AppStatus.ReadingWallet:
         setMessage('reading wallet list')
         break
+      case AppStatus.ShuttingDown:
+        setMessage('shutting down')
+        break
     }
   }, [status])
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center text-2xl w-full h-screen">
-        <span>
-          {message}...
-          <LoadingOverlay visible={true} />
-        </span>
-      </div>
-    </>
+    <div className="flex gap-3 justify-center items-center text-2xl w-full h-screen">
+      <MatrixEffect />
+      <LoadingOverlay visible={true} />
+      <span className="pb-1">{message}</span>
+    </div>
   )
 }
 
