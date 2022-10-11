@@ -18,7 +18,7 @@ export enum AppStatus {
 }
 
 export type StoreState = {
-  app: { pending_config: StoreStateSingle }
+  app: { pending_config: Partial<StoreStateSingle> }
 } & StoreStateSingle
 
 type StoreStateSingle = {
