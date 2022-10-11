@@ -52,7 +52,7 @@ type StoreStateSingle = {
   }
 
   wallets: {
-    list: never[]
+    list: { address: string; name: string; password_protected: never }[]
     legacy: never[]
   }
   wallet: {
