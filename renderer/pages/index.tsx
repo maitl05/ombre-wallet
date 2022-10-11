@@ -19,8 +19,8 @@ function Index() {
         ok: 'Exit',
         cancel: 'Cancel',
       })
-      Dialog.once('settle', (value) => {
-        if (value) {
+      Dialog.once('settle', ({ result }) => {
+        if (result) {
           ipcRenderer.send('confirmClose', true)
         }
       })

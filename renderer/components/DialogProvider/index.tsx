@@ -1,4 +1,5 @@
 import Button from 'components/Button'
+import Input from 'components/Input'
 import Modal from 'components/Modal'
 import { Dialog } from 'contexts/dialog'
 import _ from 'lodash'
@@ -8,28 +9,28 @@ import { DialogParams } from 'types'
 export type DialogProviderProps = PropsWithChildren
 
 function settleWith(result: boolean) {
-  return () => Dialog.settle(result)
+  return (value?: string) => Dialog.settle(result, value)
 }
 
 export default function DialogProvider({ children }: DialogProviderProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogParams, setDialogParams] = useState<DialogParams>()
+  const [value, setValue] = useState(undefined)
+
   useEffect(() => {
-    const listeners = [
-      (params: DialogParams) => {
+    const unsub = [
+      Dialog.on('open', (params: DialogParams) => {
         setDialogParams(params)
         setDialogOpen(true)
-      },
-      () => {
+      }),
+      Dialog.on('settle', () => {
         setDialogOpen(false)
-      },
-    ] as const
-    Dialog.on('open', listeners[0])
-    Dialog.on('settle', listeners[1])
+        setValue(undefined)
+      }),
+    ]
 
     return () => {
-      Dialog.off('open', listeners[0])
-      Dialog.off('settle', listeners[1])
+      unsub.forEach((x) => x())
     }
   }, [])
 
@@ -43,6 +44,16 @@ export default function DialogProvider({ children }: DialogProviderProps) {
       open={dialogOpen}
       onClose={settleWith(false)}>
       {dialogParams.message}
+      {dialogParams.prompt && (
+        <Input
+          type={dialogParams.prompt.type}
+          value={dialogParams.prompt.value}
+          onBlur={(e) => {
+            setValue(e.target.value)
+          }}
+        />
+      )}
+
       <div className="flex justify-around pt-2">
         {dialogParams.cancel && (
           <Button
@@ -52,21 +63,12 @@ export default function DialogProvider({ children }: DialogProviderProps) {
             {dialogParams.cancel}
           </Button>
         )}
-        {_.isEmpty(dialogParams.ok) ? (
-          <Button
-            className={'text-sm'}
-            btnType="secondary"
-            job={settleWith(true)}>
-            OK
-          </Button>
-        ) : (
-          <Button
-            className={'text-sm'}
-            btnType="secondary"
-            job={settleWith(true)}>
-            {dialogParams.ok}
-          </Button>
-        )}
+        <Button
+          className={'text-sm'}
+          btnType="secondary"
+          job={() => settleWith(true)(value)}>
+          {_.isEmpty(dialogParams.ok) ? 'OK' : dialogParams.ok}
+        </Button>
       </div>
     </Modal>
   )

@@ -68,8 +68,8 @@ class Gateway {
       ok: restart ? 'RESTART' : 'EXIT',
       cancel: 'CANCEL',
     })
-    Dialog.once('settle', (res) => {
-      if (res) {
+    Dialog.once('settle', ({ result }) => {
+      if (result) {
         this.closeDialog = false
         Store.update({ app: { status: { code: 99 } } })
         Router.replace('/')
@@ -91,8 +91,8 @@ class Gateway {
       ok: 'YES',
       cancel: 'NO',
     })
-    Dialog.once('settle', (res) => {
-      if (res) {
+    Dialog.once('settle', ({ result }) => {
+      if (result) {
         this.minimizeDialog = false
         ipcRenderer.send('confirmMinimizeTray', true)
       } else {

@@ -4,4 +4,8 @@ export type DialogParams = {
   ok?: string
   cancel?: string
   callback?: (value: boolean) => void
+  prompt?: {
+    type?: 'text' | 'password'
+    value?: string
+  }
 }

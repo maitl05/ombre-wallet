@@ -1,10 +1,12 @@
-import { EventEmitter } from 'stream'
 import { DialogParams } from 'types'
-import { TypedEventEmitter } from 'types/utils'
+import { Subscribable } from 'types/utils'
 
-export type DialogEventDetail = { open: DialogParams; settle: boolean }
+export type DialogEventDetail = {
+  open: DialogParams
+  settle: { result: boolean; value?: string }
+}
 
-class DialogClass extends EventEmitter {
+class DialogClass extends Subscribable<DialogEventDetail> {
   private constructor() {
     super()
   }
@@ -24,13 +26,10 @@ class DialogClass extends EventEmitter {
     this.emit('open', args)
   }
 
-  public settle(result: boolean) {
-    this.emit('settle', result)
+  public settle(result: boolean, value?: string) {
+    this.emit('settle', { result, value })
   }
 }
 
-const Dialog = DialogClass.instance as TypedEventEmitter<
-  DialogClass,
-  DialogEventDetail
->
+const Dialog = DialogClass.instance
 export { Dialog }
