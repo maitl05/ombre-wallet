@@ -15,6 +15,7 @@ export enum AppStatus {
   // 4
   StartingWallet = 6,
   ReadingWallet = 7,
+  ShuttingDown = 99,
 }
 
 export type StoreState = {

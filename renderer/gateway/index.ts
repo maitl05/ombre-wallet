@@ -71,7 +71,8 @@ class Gateway {
     Dialog.once('settle', (res) => {
       if (res) {
         this.closeDialog = false
-        Router.replace('/quit')
+        Store.update({ app: { status: { code: 99 } } })
+        Router.replace('/')
         ipcRenderer.send('confirmClose', restart)
       } else {
         this.closeDialog = false
