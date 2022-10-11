@@ -71,14 +71,15 @@ export default function Preferences({
             />
           </div>
           <div className="mt-auto ml-auto children:m-2">
-            <Button
-              btnType="primary"
-              disabled={hasError.some(_.identity)}
-              job={() => {
-                onClose()
-              }}>
-              cancel
-            </Button>
+            {!initConfig && (
+              <Button
+                btnType="primary"
+                job={() => {
+                  onClose()
+                }}>
+                cancel
+              </Button>
+            )}
             <Button
               btnType="secondary"
               disabled={hasError.some(_.identity)}
