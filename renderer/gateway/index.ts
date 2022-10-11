@@ -151,7 +151,7 @@ class Gateway {
         break
 
       case 'wallet_list':
-        Store.update({ wallet: message.data })
+        Store.update({ wallets: message.data })
         break
 
       case 'settings_changed_reboot':
