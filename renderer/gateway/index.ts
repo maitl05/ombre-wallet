@@ -164,7 +164,7 @@ class Gateway {
 
       case 'show_notification':
         toast(_.get(message.data, 'message'), {
-          delay: _.get(message.data, 'timeout') ?? 1000,
+          autoClose: _.get(message.data, 'timeout') ?? 5000,
           type: TOAST_TYPE_MATCH[_.get(message.data, 'type')] ?? 'success',
         })
         break
