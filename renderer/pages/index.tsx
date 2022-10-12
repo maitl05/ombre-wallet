@@ -63,7 +63,7 @@ function Index() {
         setMessage('loading settings')
         break
       case AppStatus.StartingDaemon:
-        setMessage('starting daemon')
+        setMessage('connecting to remote')
         break
       case AppStatus.StartingWallet:
         setMessage('starting wallet')
