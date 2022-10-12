@@ -1,3 +1,4 @@
+/**@deprecated */
 export type Wallet = {
   info: {
     name: string
