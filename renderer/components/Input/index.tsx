@@ -9,6 +9,7 @@ export type InputProps = {
   value?: string
   label?: string
   onErrorStateChange?: (hasError: boolean) => void
+  onAccept?: (value: string) => void
 } & Omit<
   React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -27,6 +28,7 @@ export default function Input({
   onBlur,
   onFocus,
   onErrorStateChange,
+  onAccept,
   ...props
 }: InputProps): React.ReactElement | null {
   const [value, setValue] = useState(_value ?? '')
@@ -75,6 +77,9 @@ export default function Input({
         onKeyDown={(e) => {
           onKeyDown?.(e)
           setNotChangedYet(false)
+          if (e.key === 'Enter') {
+            onAccept?.(value)
+          }
         }}
         onChange={(e) => {
           if (!props.disabled) {

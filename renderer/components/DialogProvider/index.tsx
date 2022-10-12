@@ -52,6 +52,7 @@ export default function DialogProvider({ children }: DialogProviderProps) {
           onBlur={(e) => {
             setValue(e.target.value)
           }}
+          onAccept={settleWith(true)}
         />
       )}
 
