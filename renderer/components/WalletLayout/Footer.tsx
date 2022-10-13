@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import cn from 'classnames'
 import { ClassName } from 'types'
 import _ from 'lodash'
 import { shell } from 'electron'
 import { ExternalLinkData, ExternalLinks } from './externalLinks'
-import { WalletCtx } from 'contexts/wallet'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { useStore } from 'hooks/observe-store'
 
 export type WalletFooterProps = {
   className?: ClassName
@@ -19,13 +19,8 @@ function handleExternalLink(address: string): void {
 export default function WalletFooter({
   className,
 }: WalletFooterProps): React.ReactElement | null {
-  const { wallet } = useContext(WalletCtx)
-  const [balance, setBalance] = useState(null)
+  const balance = useStore('wallet', (e) => e.info.balance)
   const [hideBalance, setHideBalance] = useState(false)
-
-  useEffect(() => {
-    setBalance(wallet?.info.balance)
-  }, [wallet])
 
   return (
     <div className={cn('', className)}>
@@ -51,7 +46,9 @@ export default function WalletFooter({
           )}
         </span>
       </div>
+
       <hr className="mt-3" />
+
       <div
         className={cn(
           'children:p-2 children:justify-center children:flex children:text-text-secondary hover:children:text-secondary-400 children:transition-colors children:cursor-pointer',
