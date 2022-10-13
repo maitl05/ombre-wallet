@@ -1,5 +1,4 @@
 import cn from 'classnames'
-import Link from 'next/link'
 import { ClassName } from 'types'
 import _ from 'lodash'
 import { NavMenuLinks, NavMenuRouteData } from './routes'
@@ -10,9 +9,8 @@ export type NavMenuProps = { className?: ClassName }
 export default function NavMenu({ className, ...props }: NavMenuProps) {
   return (
     <div className={cn('', className)}>
-      <Link href="/">
-        <img className="m-auto p-5 h-28" src="/images/logo.svg" />
-      </Link>
+      <img className="m-auto p-5 h-28 object-center" src="/images/logo.svg" />
+
       <hr className="mb-4" />
 
       <div className="flex flex-col gap-2">

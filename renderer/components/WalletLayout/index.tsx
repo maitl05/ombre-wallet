@@ -15,15 +15,17 @@ export default function WalletLayout({
   ...props
 }: WalletLayoutProps) {
   return (
-    <div className="w-screen h-screen flex gap-5 px-5">
+    <div className="w-screen h-screen min-h-screen max-h-screen flex gap-5 px-5">
       <div className="flex flex-col justify-between w-full max-w-xs">
         <NavMenu />
         <WalletFooter />
       </div>
 
-      <div className="flex flex-col w-full h-full">
+      <div className="flex flex-col w-full max-h-full h-full">
         <WalletHeader title={title} />
-        <div className="flex flex-col gap-9 items-start">{children}</div>
+        <div className="flex flex-col gap-9 items-start grow overflow-auto pb-5">
+          {children}
+        </div>
       </div>
     </div>
   )

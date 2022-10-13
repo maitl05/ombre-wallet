@@ -13,7 +13,7 @@ export default function WalletHeader({
 }: WalletHeaderProps): React.ReactElement | null {
   return (
     <>
-      <div className={cn('h-28 flex items-center justify-between')}>
+      <div className={cn('h-28 shrink-0 flex items-center justify-between')}>
         <h1 className="text-3xl pl-2">{title}</h1>
         <div className="flex gap-2 items-center">{children}</div>
       </div>
