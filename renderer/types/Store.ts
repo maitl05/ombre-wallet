@@ -18,6 +18,16 @@ export enum AppStatus {
   ShuttingDown = 99,
 }
 
+export type SingleAddress = {
+  address: string
+  address_index: number
+  label: string
+  used: boolean
+  balance: number | null
+  unlocked_balance: number | null
+  num_unspent_outputs: number | null
+}
+
 export type StoreState = {
   app: { pending_config: Partial<StoreStateSingle> }
 } & StoreStateSingle
@@ -82,9 +92,10 @@ type StoreStateSingle = {
       tx_list: never[]
     }
     address_list: {
-      used: never[]
-      unused: never[]
+      used: SingleAddress[]
+      unused: SingleAddress[]
       address_book: never[]
+      primary: [SingleAddress]
     }
   }
   tx_status: {
