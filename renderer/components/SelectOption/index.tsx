@@ -43,6 +43,7 @@ export default function SelectOption({
 const customStyles: StylesConfig = {
   control: (provided) => ({
     ...provided,
+    cursor: 'pointer',
     backgroundColor: 'var(--color-primary-800)',
     border: 0,
     boxShadow: '0 0 5px 1px var(--color-primary-900)',
@@ -61,7 +62,12 @@ const customStyles: StylesConfig = {
   }),
   option: (provided, state) => ({
     ...provided,
-    borderBottom: '2px solid #484848',
+    cursor: 'pointer',
     backgroundColor: state.isSelected && '#424242',
+    fontWeight: state.isSelected && 700,
+    ':hover': { backgroundColor: '#535353' },
+    ':not(:last-child)': {
+      borderBottom: '2px solid #484848',
+    },
   }),
 }
