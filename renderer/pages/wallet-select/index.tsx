@@ -1,78 +1,70 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { NextPage } from 'next'
 import { useStore } from 'hooks/observe-store'
 import Button from 'components/Button'
 import { Gateway } from 'gateway'
 import { useRouter } from 'next/router'
-import AddressPhoto from 'components/AddressPhoto'
 import WalletHeader from 'components/WalletLayout/Header'
-import { writeFileSync } from 'fs'
 import { Dialog } from 'contexts/dialog'
 import Address from 'components/Address'
 import { Store } from 'contexts/store'
-import { storeDefaultState } from 'static/store-defaults'
 import _ from 'lodash'
 import Card from 'components/Card'
+import WalletCreate from 'components/WalletCreate'
+import { walletStatusChange } from 'helpers/expect-wallet-status'
 
 //TODO: add this https://www.npmjs.com/package/password-meter
 const WalletSelect: NextPage = () => {
   const wallets = useStore('wallets')
   const router = useRouter()
 
-  const handleAddWallet = () => {
-    throw 'not implemented'
-    Gateway.i.send('wallet', 'create_wallet', {
-      name: 'test99',
-      password: 'test',
-      password_confirm: 'test',
-      language: 'English',
-      type: 'long',
-    })
-  }
+  const [addWalletStatus, setAddWalletStatus] = useState<
+    undefined | 'doing' | 'done'
+  >(undefined)
 
   useEffect(() => {
-    return Store.on('wallet', (currentWallet) => {
-      if (currentWallet.status.code !== 0 && currentWallet.status.code !== 1) {
+    const shouldContinue = { current: true }
+    function listen() {
+      walletStatusChange.expect().catch((msg) => {
         Gateway.i.receive({
           event: 'show_notification',
           data: {
-            message: currentWallet.status.message,
+            message: msg,
             type: 'negative',
           },
         })
-      }
-    })
+        if (shouldContinue.current) {
+          listen()
+        }
+      })
+    }
+    listen()
+    return () => {
+      shouldContinue.current = false
+    }
   }, [])
 
-  const expectWalletOpen = useMemo(
-    () => () => {
-      const unsub = Store.on('wallet', (walletData) => {
-        if (walletData.status.code === 1) {
-          return
-        }
-        if (walletData.status.code === 0) {
-          router.push('/wallet/info')
-        }
-        unsub()
-      })
-    },
-    [router],
-  )
+  useEffect(() => {
+    if (addWalletStatus === 'done') {
+      router.push('/wallet/info')
+    }
+  }, [addWalletStatus, router])
 
   return (
     <div className="flex flex-col w-full h-full px-5">
+      <WalletCreate
+        open={addWalletStatus === 'doing'}
+        onSettle={(res) => setAddWalletStatus(res ? 'done' : undefined)}
+      />
       <WalletHeader title="Wallet Manager">
         <Button
           btnType="primary"
           onClick={() => {
             throw 'not implemented'
-            Store.resetWalletData()
-            //
-            expectWalletOpen()
           }}>
           Recover Wallet
         </Button>
-        <Button btnType="primary" onClick={handleAddWallet}>
+        <Button btnType="primary" onClick={() => setAddWalletStatus('doing')}>
           Add Wallet
         </Button>
       </WalletHeader>
@@ -98,21 +90,27 @@ const WalletSelect: NextPage = () => {
                 })
                 Dialog.once('settle', ({ result, value }) => {
                   if (result) {
-                    Store.resetWalletData()
+                    walletStatusChange.prepare()
                     Gateway.i.send('wallet', 'open_wallet', {
                       name: wallet.name,
                       password: value,
                     })
-                    expectWalletOpen()
+                    walletStatusChange
+                      .expect()
+                      .then(() => router.push('/wallet/info'))
+                      .catch(_.noop)
                   }
                 })
               } else {
-                Store.resetWalletData()
+                walletStatusChange.prepare()
                 Gateway.i.send('wallet', 'open_wallet', {
                   name: wallet.name,
                   password: '',
                 })
-                expectWalletOpen()
+                walletStatusChange
+                  .expect()
+                  .then(() => router.push('/wallet/info'))
+                  .catch(_.noop)
               }
             }}
           />
