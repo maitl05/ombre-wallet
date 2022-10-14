@@ -78,3 +78,11 @@ export const portValidator: ValidatorFunction = (value) => {
     return undefined
   }
 }
+
+export const walletNameValidator: ValidatorFunction = (val) => {
+  return !/^[\w\-. ]+$/.test(val) ? 'not a valid filename' : undefined
+}
+
+export const passwordValidator: ValidatorFunction = (val) => {
+  return !val.length ? 'password must not be empty' : undefined
+}

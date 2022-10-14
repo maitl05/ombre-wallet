@@ -7,20 +7,13 @@ import WalletLayout from 'components/WalletLayout'
 import { Gateway } from 'gateway'
 import { walletStatusChange } from 'helpers/expect-wallet-status'
 import { setRecordState } from 'helpers/setRecordState'
+import { passwordValidator, walletNameValidator } from 'helpers/validators'
 import { useRecordData } from 'hooks/record-data'
 import _ from 'lodash'
 import { useEffect, useMemo, useState } from 'react'
 
 export type WalletCreateProps = {
   onSettle: (result: boolean) => void
-}
-
-function walletNameValidator(val: string) {
-  return !/^[\w\-. ]+$/.test(val) ? 'not a valid filename' : undefined
-}
-
-function passwordValidator(val: string) {
-  return !val.length ? 'password must not be empty' : undefined
 }
 
 export default function WalletCreatePrompt({
