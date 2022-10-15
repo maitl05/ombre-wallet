@@ -86,3 +86,28 @@ export const walletNameValidator: ValidatorFunction = (val) => {
 export const passwordValidator: ValidatorFunction = (val) => {
   return !val.length ? 'password must not be empty' : undefined
 }
+
+export const walletHeightValidator: ValidatorFunction = (val) => {
+  return String(parseInt(val)) !== val
+    ? 'should be a number'
+    : parseInt(val) < 0
+    ? 'should be greater than or equal to zero'
+    : undefined
+}
+
+export const seedPhraseValidator: ValidatorFunction = (val) => {
+  const seed = val
+    .trim()
+    .replace(/\s{2,}/g, ' ')
+    .split(' ')
+  if (
+    seed.length !== 14 &&
+    seed.length !== 24 &&
+    seed.length !== 25 &&
+    seed.length !== 26
+  ) {
+    return 'invalid seed word length'
+  }
+  return undefined
+}
+
