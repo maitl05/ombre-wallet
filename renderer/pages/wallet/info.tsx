@@ -1,7 +1,5 @@
 import WalletLayout from 'components/WalletLayout'
-import { useContext } from 'react'
 import AddressPhoto from 'components/AddressPhoto'
-import { WalletCtx } from 'contexts/wallet'
 import Card from 'components/Card'
 import SelectOption from 'components/SelectOption'
 import { useStore } from 'hooks/observe-store'
@@ -11,13 +9,14 @@ export default function WalletInfo() {
 
   return (
     <WalletLayout title="Account info">
-      <div className="flex flex-1 gap-3 p-2 pb-0">
+      <div className="flex gap-3 p-2 pb-0">
         <AddressPhoto address={wallet?.info.address} />
         <div className="break-all">
           <p className="font-semibold text-2xl">{wallet?.info.name}</p>
           <p className="text-lg">{wallet?.info.address}</p>
         </div>
       </div>
+
       <div className="flex justify-between w-full p-3 pt-0">
         <div className="flex flex-col">
           <span className="text-xl">BALANCE</span>
@@ -36,7 +35,9 @@ export default function WalletInfo() {
           }}
         />
       </div>
+
       <span className="text-2xl font-bold pb-0">Recent transactions:</span>
+
       <div className="flex flex-col gap-2 w-full">
         {wallet?.transactions.tx_list.length > 0 ? (
           wallet?.transactions.tx_list.map((tx, index) => (
