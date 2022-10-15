@@ -14,7 +14,6 @@ export default function AddressDetailModal({
   closeHandler,
 }: AddressDetailModalProps): React.ReactElement | null {
   const [open, setOpen] = useState(false)
-  console.log(addressDetail)
 
   useEffect(() => {
     if (_.isEmpty(addressDetail)) {
@@ -32,6 +31,7 @@ export default function AddressDetailModal({
         open={open}
         onClose={closeHandler}>
         <Address
+          className={'!bg-primary-800'}
           name={
             addressDetail?.address_index > 0
               ? `Sub-address (Index ${addressDetail.address_index})`
@@ -42,7 +42,7 @@ export default function AddressDetailModal({
             addressDetail.used ? 'used' : 'not used'
           } this address`}
         />
-        <div className="flex justify-between p-3 pt-0">
+        <div className="flex justify-between p-3">
           <div className="flex flex-col">
             <span className="text-xl">BALANCE</span>
             <span>{addressDetail.balance ? addressDetail.balance : 0}</span>
