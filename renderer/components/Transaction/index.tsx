@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ClassName } from 'types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -11,8 +11,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { SingleTransaction } from 'types/Store'
 import Card from 'components/Card'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 
-const txAestheticMap: Record<
+TimeAgo.addLocale(en)
+const timeAgo = new TimeAgo('en-GB')
+
+export const txAestheticMap: Record<
   SingleTransaction['type'],
   { icon: React.ReactElement; style: ClassName }
 > = {
@@ -35,33 +40,41 @@ const txAestheticMap: Record<
   pool: { icon: <FontAwesomeIcon icon={faCoins} />, style: 'text-yellow-300' },
 }
 
-export type TransactionProps = { tx: SingleTransaction }
+export type TransactionProps = {
+  tx: SingleTransaction
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}
 
 export default function Transaction({
   tx,
+  onClick,
 }: TransactionProps): React.ReactElement {
   return (
-    <Card className={'flex gap-3'}>
+    <Card className={cn('flex gap-3', onClick && 'hover:bg-primary-600')}>
       <div
-        className={cn(
-          'text-5xl flex justify-center items-center',
-          txAestheticMap[tx.type].style,
-        )}>
-        {txAestheticMap[tx.type].icon}
-      </div>
+        className={cn('contents', onClick && 'cursor-pointer')}
+        onClick={onClick}>
+        <div
+          className={cn(
+            'text-5xl flex justify-center items-center',
+            txAestheticMap[tx.type].style,
+          )}>
+          {txAestheticMap[tx.type].icon}
+        </div>
 
-      <div className={'flex flex-col w-full grow-1 text-lg truncate'}>
-        <span className={cn('truncate', txAestheticMap[tx.type].style)}>
-          {tx.txid}
-        </span>
-        <span className="">Height: {tx.height}</span>
-      </div>
+        <div className={'flex flex-col w-full grow-1 text-lg truncate'}>
+          <span className={cn('truncate', txAestheticMap[tx.type].style)}>
+            {tx.txid}
+          </span>
+          <span className="text-sm">Height: {tx.height}</span>
+        </div>
 
-      <div className="flex flex-col grow-1 justify-between min-w-fit">
-        <span className={'text-lg'}>{(tx.amount / 1e9).toFixed(3)} OMB</span>
-        <span className={'text-xs '}>
-          {new Date(tx.timestamp * 1000).toLocaleString(undefined,{hour12:false})}
-        </span>
+        <div className="flex flex-col grow-1 justify-between min-w-fit">
+          <span className={'text-lg'}>{(tx.amount / 1e9).toFixed(3)} OMB</span>
+          <span className={'text-xs ml-auto'}>
+            {timeAgo.format(new Date(tx.timestamp * 1000))}
+          </span>
+        </div>
       </div>
     </Card>
   )
