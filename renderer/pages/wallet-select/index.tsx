@@ -13,6 +13,8 @@ import Card from 'components/Card'
 import WalletCreate from 'components/WalletCreate'
 import { walletStatusChange } from 'helpers/expect-wallet-status'
 import WalletRecover from 'components/WalletRecover'
+import Modal from 'components/Modal'
+import LoadingOverlay from 'components/LoadingOverlay'
 
 //TODO: add this https://www.npmjs.com/package/password-meter
 const WalletSelect: NextPage = () => {
@@ -54,6 +56,8 @@ const WalletSelect: NextPage = () => {
       router.push('/wallet/info')
     }
   }, [addWalletStatus, recoverWalletStatus, router])
+
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <div className="flex flex-col w-full h-full px-5">
@@ -102,10 +106,12 @@ const WalletSelect: NextPage = () => {
                       name: wallet.name,
                       password: value,
                     })
+                    setIsLoading(true)
                     walletStatusChange
                       .expect()
                       .then(() => router.push('/wallet/info'))
                       .catch(_.noop)
+                      .finally(() => setIsLoading(false))
                   }
                 })
               } else {
@@ -114,15 +120,20 @@ const WalletSelect: NextPage = () => {
                   name: wallet.name,
                   password: '',
                 })
+                setIsLoading(true)
                 walletStatusChange
                   .expect()
                   .then(() => router.push('/wallet/info'))
                   .catch(_.noop)
+                  .finally(() => setIsLoading(false))
               }
             }}
           />
         ))}
       </div>
+      <Modal open={isLoading} title="Loading wallet data..." onClose={_.noop}>
+        <LoadingOverlay visible />
+      </Modal>
     </div>
   )
 }
