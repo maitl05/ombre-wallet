@@ -109,3 +109,10 @@ export const seedPhraseValidator: ValidatorFunction = (val) => {
   return undefined
 }
 
+export const amountValidator: ValidatorFunction = (val) => {
+  return String(parseFloat(val)) !== val
+    ? 'should be a number'
+    : parseFloat(val) <= 0
+    ? 'should be greater than zero'
+    : undefined
+}
