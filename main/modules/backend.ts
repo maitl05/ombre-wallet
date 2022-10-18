@@ -63,8 +63,8 @@ export class Backend {
 
       daemon: {
         type: 'remote',
-        remote_host: 'geo.ryoblocks.com',
-        remote_port: 12211,
+        remote_host: '5.56.132.162',
+        remote_port: 19742,
 
         // below options are used for local daemon only
         // p2p_bind_ip: '0.0.0.0',
