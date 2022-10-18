@@ -12,7 +12,7 @@ export enum NavMenuLinks {
   wallet = 'info',
   send = 'send',
   receive = 'receive',
-  addresses = 'addresses',
+  // addresses = 'addresses',
   history = 'history',
 }
 export const NavMenuRouteData: {
@@ -33,10 +33,10 @@ export const NavMenuRouteData: {
     title: 'Receive',
     icon: <FontAwesomeIcon icon={faArrowDown} />,
   },
-  [NavMenuLinks.addresses]: {
-    title: 'Addresses',
-    icon: <FontAwesomeIcon icon={faAddressBook} />,
-  },
+  // [NavMenuLinks.addresses]: {
+  //   title: 'Addresses',
+  //   icon: <FontAwesomeIcon icon={faAddressBook} />,
+  // },
   [NavMenuLinks.history]: {
     title: 'History',
     icon: <FontAwesomeIcon icon={faClockRotateLeft} />,
