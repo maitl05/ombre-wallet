@@ -38,9 +38,11 @@ export default function WalletSend() {
     false,
   ])
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSend = useMemo(
     () => () => {
+      setIsLoading(true)
       Dialog.open({
         title: 'Password',
         message: 'Enter wallet password to continue.',
@@ -70,6 +72,7 @@ export default function WalletSend() {
                 },
               })
               router.push('/wallet/history')
+              setIsLoading(false)
             })
             .catch((message) => {
               Gateway.i.receive({
@@ -80,12 +83,15 @@ export default function WalletSend() {
                   timeout: 1000,
                 },
               })
+              setIsLoading(false)
             })
 
           Gateway.i.send('wallet', 'transfer', {
             ...pageData,
             password: value,
           })
+        } else {
+          setIsLoading(false)
         }
       })
     },
@@ -102,12 +108,14 @@ export default function WalletSend() {
         </p>
       </div>
       <Input
+        disabled={isLoading}
         label="Destination"
         validator={addressValidator}
         onBlur={setPageData('amount', (e) => e.target.value)}
         onErrorStateChange={setHasError(0)}
       />
       <Input
+        disabled={isLoading}
         label="Amount"
         type="number"
         validator={amountValidator}
@@ -115,34 +123,41 @@ export default function WalletSend() {
         onErrorStateChange={setHasError(1)}
       />
       <Input
+        disabled={isLoading}
         label="Payment ID"
         validator={paymentIdValidator}
         onBlur={setPageData('payment_id', (e) => e.target.value)}
         onErrorStateChange={setHasError(2)}
       />
-
-      <SelectOption
-        onChange={setPageData('ringsize', Number)}
-        label="Ring size"
-        defaultValue={{ label: '25 ring members (default)', value: '25' }}
-        options={[
-          { label: '25 ring members (default)', value: '25' },
-          { label: '100 ring members (top secret)', value: '100' },
-        ]}
-      />
-      <SelectOption
-        onChange={setPageData('priority', Number)}
-        label="Priority"
-        defaultValue={{ label: 'Normal (x1 fee)', value: '0' }}
-        options={[
-          { label: 'Normal (x1 fee)', value: '0' },
-          { label: 'High (x2 fee)', value: '1' },
-          { label: 'High (x4 fee)', value: '2' },
-          { label: 'High (x20 fee)', value: '3' },
-          { label: 'Highest (x144 fee)', value: '4' },
-        ]}
-      />
-      <Button btnType="secondary" disabled={hasError.some(_.identity)}>
+      <div className="px-3 gap-3 flex flex-col">
+        <SelectOption
+          isDisabled={isLoading}
+          onChange={setPageData('ringsize', Number)}
+          label="Ring size"
+          defaultValue={{ label: '25 ring members (default)', value: '25' }}
+          options={[
+            { label: '25 ring members (default)', value: '25' },
+            { label: '100 ring members (top secret)', value: '100' },
+          ]}
+        />
+        <SelectOption
+          isDisabled={isLoading}
+          onChange={setPageData('priority', Number)}
+          label="Priority"
+          defaultValue={{ label: 'Normal (x1 fee)', value: '0' }}
+          options={[
+            { label: 'Normal (x1 fee)', value: '0' },
+            { label: 'High (x2 fee)', value: '1' },
+            { label: 'High (x4 fee)', value: '2' },
+            { label: 'High (x20 fee)', value: '3' },
+            { label: 'Highest (x144 fee)', value: '4' },
+          ]}
+        />
+      </div>
+      <Button
+        btnType="secondary"
+        disabled={hasError.some(_.identity)}
+        job={handleSend}>
         Send
       </Button>
     </WalletLayout>
