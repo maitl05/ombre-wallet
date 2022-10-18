@@ -1,5 +1,7 @@
 import Button from 'components/Button'
 import Input from 'components/Input'
+import LoadingOverlay from 'components/LoadingOverlay'
+import Modal from 'components/Modal'
 import SelectOption from 'components/SelectOption'
 import WalletLayout from 'components/WalletLayout'
 import { Dialog } from 'contexts/dialog'
@@ -8,9 +10,10 @@ import { Gateway } from 'gateway'
 import { txStatusChange } from 'helpers/expect-tx-status'
 import {
   addressValidator,
-  amountValidator,
+  amountValidatorFactory,
   paymentIdValidator,
 } from 'helpers/validators'
+import { useStore } from 'hooks/observe-store'
 import { useRecordData } from 'hooks/record-data'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
@@ -97,6 +100,10 @@ export default function WalletSend() {
     [reset],
   )
 
+  const amountValidator = useStore('wallet', (wallet) =>
+    amountValidatorFactory(wallet.info.unlocked_balance / 1e9),
+  )
+
   return (
     <WalletLayout title="Send">
       <div className="pt-4">
@@ -159,6 +166,9 @@ export default function WalletSend() {
         job={handleSend}>
         Send
       </Button>
+      <Modal title={'Processing...'} onClose={_.noop} open={isLoading}>
+        <LoadingOverlay visible />
+      </Modal>
     </WalletLayout>
   )
 }

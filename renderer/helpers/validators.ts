@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export type ValidatorFunction = (value: string) => string | undefined
 
 export const testHelloValidator: ValidatorFunction = (value) => {
@@ -109,10 +111,15 @@ export const seedPhraseValidator: ValidatorFunction = (val) => {
   return undefined
 }
 
-export const amountValidator: ValidatorFunction = (val) => {
-  return String(parseFloat(val)) !== val
-    ? 'should be a number'
-    : parseFloat(val) <= 0
-    ? 'should be greater than zero'
-    : undefined
-}
+export const amountValidatorFactory: (max?: number) => ValidatorFunction =
+  (max) => (val) => {
+    return String(parseFloat(val)) !== val
+      ? 'should be a number'
+      : parseFloat(val) <= 0
+      ? 'should be greater than zero'
+      : !_.isUndefined(max)
+      ? parseFloat(val) > max
+        ? 'exceeds unlocked balance'
+        : undefined
+      : undefined
+  }
