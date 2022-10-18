@@ -110,7 +110,7 @@ export default function WalletSend() {
         disabled={isLoading}
         label="Destination"
         validator={addressValidator}
-        onBlur={setPageData('amount', (e) => e.target.value)}
+        onBlur={setPageData('address', (e) => e.target.value)}
         onErrorStateChange={setHasError(0)}
       />
       <Input
