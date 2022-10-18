@@ -57,8 +57,8 @@ export const storeDefaultState = {
     },
   },
   tx_status: {
-    code: 0,
-    message: '',
+    code: 1,
+    message: null,
   },
   daemon: {
     info: {

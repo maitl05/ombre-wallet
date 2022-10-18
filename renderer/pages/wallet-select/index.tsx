@@ -12,6 +12,7 @@ import _ from 'lodash'
 import Card from 'components/Card'
 import WalletCreate from 'components/WalletCreate'
 import { walletStatusChange } from 'helpers/expect-wallet-status'
+import WalletRecover from 'components/WalletRecover'
 
 //TODO: add this https://www.npmjs.com/package/password-meter
 const WalletSelect: NextPage = () => {
@@ -19,6 +20,10 @@ const WalletSelect: NextPage = () => {
   const router = useRouter()
 
   const [addWalletStatus, setAddWalletStatus] = useState<
+    undefined | 'doing' | 'done'
+  >(undefined)
+
+  const [recoverWalletStatus, setRecoverWalletStatus] = useState<
     undefined | 'doing' | 'done'
   >(undefined)
 
@@ -45,10 +50,10 @@ const WalletSelect: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    if (addWalletStatus === 'done') {
+    if (addWalletStatus === 'done' || recoverWalletStatus === 'done') {
       router.push('/wallet/info')
     }
-  }, [addWalletStatus, router])
+  }, [addWalletStatus, recoverWalletStatus, router])
 
   return (
     <div className="flex flex-col w-full h-full px-5">
@@ -56,12 +61,14 @@ const WalletSelect: NextPage = () => {
         open={addWalletStatus === 'doing'}
         onSettle={(res) => setAddWalletStatus(res ? 'done' : undefined)}
       />
+      <WalletRecover
+        open={recoverWalletStatus === 'doing'}
+        onSettle={(res) => setRecoverWalletStatus(res ? 'done' : undefined)}
+      />
       <WalletHeader title="Wallet Manager">
         <Button
           btnType="primary"
-          onClick={() => {
-            throw 'not implemented'
-          }}>
+          onClick={() => setRecoverWalletStatus('doing')}>
           Recover Wallet
         </Button>
         <Button btnType="primary" onClick={() => setAddWalletStatus('doing')}>

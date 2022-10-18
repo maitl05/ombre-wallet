@@ -119,6 +119,7 @@ type StoreStateSingle = {
   tx_status: {
     code: number
     message: string
+    sending: boolean
   }
   daemon: {
     type: 'remote' | 'local' | 'local_remote'

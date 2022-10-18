@@ -46,23 +46,21 @@ export const addressValidator: ValidatorFunction = (value) => {
     case 'cash':
     case 'Suto':
     case 'Te':
-      return value.length === 99 ? undefined : 'Invalid Address'
-
-      return value.length == 98 ? undefined : 'Invalid Address'
+      return value.length === 98 ? undefined : 'Invalid Address'
 
     case 'Suba':
     case 'Ts':
-      return value.length == 99 ? undefined : 'Invalid Address'
+      return value.length == 98 ? undefined : 'Invalid Address'
 
     case 'Shadow':
     case 'casi':
     case 'Suti':
     case 'Ti':
-      return value.length === 110 ? undefined : 'Invalid Address'
+      return value.length === 109 ? undefined : 'Invalid Address'
 
     case 'Shad3':
     case 'Tu':
-      return value.length === 55 ? undefined : 'Invalid Address'
+      return value.length === 54 ? undefined : 'Invalid Address'
 
     default:
       return 'Invalid Address'
@@ -85,4 +83,36 @@ export const walletNameValidator: ValidatorFunction = (val) => {
 
 export const passwordValidator: ValidatorFunction = (val) => {
   return !val.length ? 'password must not be empty' : undefined
+}
+
+export const walletHeightValidator: ValidatorFunction = (val) => {
+  return String(parseInt(val)) !== val
+    ? 'should be a number'
+    : parseInt(val) < 0
+    ? 'should be greater than or equal to zero'
+    : undefined
+}
+
+export const seedPhraseValidator: ValidatorFunction = (val) => {
+  const seed = val
+    .trim()
+    .replace(/\s{2,}/g, ' ')
+    .split(' ')
+  if (
+    seed.length !== 14 &&
+    seed.length !== 24 &&
+    seed.length !== 25 &&
+    seed.length !== 26
+  ) {
+    return 'invalid seed word length'
+  }
+  return undefined
+}
+
+export const amountValidator: ValidatorFunction = (val) => {
+  return String(parseFloat(val)) !== val
+    ? 'should be a number'
+    : parseFloat(val) <= 0
+    ? 'should be greater than zero'
+    : undefined
 }
