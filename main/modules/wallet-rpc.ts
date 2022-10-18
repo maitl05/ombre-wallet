@@ -85,8 +85,8 @@ export class WalletRPC {
           options.wallet.rpc_bind_port,
           '--daemon-address',
           daemon_address,
-          '--log-file-level',
-          options.wallet.log_level,
+          // '--log-file-level',
+          // options.wallet.log_level,
           '--log-level',
           '3',
           // "--log-level", "*:WARNING,net*:FATAL,net.http:DEBUG,global:INFO,verify:FATAL,stacktrace:INFO",
@@ -123,13 +123,13 @@ export class WalletRPC {
 
         if (process.platform === 'win32') {
           this.walletRPCProcess = child_process.spawn(
-            path.join(__ombre_bin, 'ryo-wallet-rpc.exe'),
+            path.join(__ombre_bin, 'ombre-wallet-rpc.exe'),
             args,
           )
         } else {
-          let bin = 'ryo-wallet-rpc'
+          let bin = 'ombre-wallet-rpc'
           if (process.platform === 'darwin') {
-            bin = 'ryo-wallet-rpc-darwin'
+            bin = 'ombre-wallet-rpc-darwin'
           }
           this.walletRPCProcess = child_process.spawn(
             path.join(__ombre_bin, bin),
