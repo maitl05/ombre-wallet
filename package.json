@@ -29,6 +29,7 @@
     "electron-store": "^8.0.1",
     "electron-window-state": "5.0.2",
     "events": "^3.3.0",
+    "javascript-time-ago": "^2.5.7",
     "lodash": "^4.17.21",
     "promise-queue": "^2.2.5",
     "react-jazzicon": "^1.0.4",
