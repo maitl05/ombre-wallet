@@ -66,11 +66,20 @@ export default function Transaction({
           <span className={cn('truncate', txAestheticMap[tx.type].style)}>
             {tx.txid}
           </span>
-          <span className="text-sm">Height: {tx.height}</span>
+          {tx.height > 0 && (
+            <span className="text-sm">Height: {tx.height}</span>
+          )}
         </div>
 
         <div className="flex flex-col grow-1 justify-between min-w-fit">
-          <span className={'text-lg'}>{(tx.amount / 1e9).toFixed(3)} OMB</span>
+          {tx.amount > 0 && (
+            <span className={'text-lg'}>
+              {(tx.amount / 1e9).toFixed(3)} OMB
+            </span>
+          )}
+          {tx.amount === 0 && (
+            <span className={'text-sm'}>internal transfer</span>
+          )}
           <span className={'text-xs ml-auto'}>
             {timeAgo.format(new Date(tx.timestamp * 1000))}
           </span>
