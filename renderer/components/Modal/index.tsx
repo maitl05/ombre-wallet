@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { ClassName } from 'types'
 
 export type ModalProps = {
-  title: string
+  title: string | React.ReactElement
   className?: ClassName
   open: boolean
   onClose: () => void
