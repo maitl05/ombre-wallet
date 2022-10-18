@@ -28,6 +28,24 @@ export type SingleAddress = {
   num_unspent_outputs: number | null
 }
 
+export type SingleTransaction = {
+  address: string
+  amount: number
+  double_spend_seen: boolean
+  fee: number
+  height: number
+  note: string
+  payment_id: string
+  subaddr_index: {
+    major: number
+    minor: number
+  }
+  timestamp: number
+  txid: string
+  type: 'in' | 'out' | 'pool' | 'pending' | 'failed'
+  unlock_time: number
+}
+
 export type StoreState = {
   app: { pending_config: Partial<StoreStateSingle> }
 } & StoreStateSingle
@@ -89,7 +107,7 @@ type StoreStateSingle = {
       spend_key: string
     }
     transactions: {
-      tx_list: never[]
+      tx_list: SingleTransaction[]
     }
     address_list: {
       used: SingleAddress[]
