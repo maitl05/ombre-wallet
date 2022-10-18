@@ -45,13 +45,13 @@ export default function AddressDetailModal({
         <div className="flex justify-between p-3">
           <div className="flex flex-col">
             <span className="text-xl">BALANCE</span>
-            <span>{addressDetail.balance ? addressDetail.balance : 0}</span>
+            <span>{addressDetail.balance ? (addressDetail.balance/ 1e9).toFixed(3) : 0}</span>
           </div>
           <div className="flex flex-col">
             <span className="text-xl">UNLOCKED BALANCE</span>
             <span>
               {addressDetail.unlocked_balance
-                ? addressDetail.unlocked_balance
+                ? (addressDetail.unlocked_balance/ 1e9).toFixed(3)
                 : 0}
             </span>
           </div>

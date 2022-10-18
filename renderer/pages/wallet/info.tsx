@@ -20,11 +20,11 @@ export default function WalletInfo() {
       <div className="flex justify-between w-full p-3 pt-0">
         <div className="flex flex-col">
           <span className="text-xl">BALANCE</span>
-          <span>{wallet?.info.balance}</span>
+          <span>{(wallet?.info.balance / 1e9).toFixed(3)}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-xl">UNLOCKED BALANCE</span>
-          <span>{wallet?.info.unlocked_balance}</span>
+          <span>{(wallet?.info.unlocked_balance / 1e9).toFixed(3)}</span>
         </div>
         <SelectOption
           className={{ container: 'w-48' }}

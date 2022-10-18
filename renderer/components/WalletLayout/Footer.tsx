@@ -37,7 +37,7 @@ export default function WalletFooter({
             </>
           ) : (
             <>
-              {balance ?? '---------'}
+              {(balance/ 1e9).toFixed(3) ?? '---------'}
               <FontAwesomeIcon
                 icon={faEye}
                 onClick={() => setHideBalance(true)}
