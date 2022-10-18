@@ -97,6 +97,19 @@ class StoreClass extends Subscribable<StoreState> {
   }
 
   resetWalletData() {
+    this._state.wallet = {
+      ...this._state.wallet,
+      transactions: {
+        tx_list: [],
+      },
+      address_list: {
+        primary: undefined,
+        used: [],
+        unused: [],
+        address_book: [],
+      },
+    }
+
     this.update({
       wallet: {
         status: {
@@ -115,14 +128,6 @@ class StoreClass extends Subscribable<StoreState> {
           mnemonic: '',
           view_key: '',
           spend_key: '',
-        },
-        transactions: {
-          tx_list: [],
-        },
-        address_list: {
-          used: [],
-          unused: [],
-          address_book: [],
         },
       },
     })
