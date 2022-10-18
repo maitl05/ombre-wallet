@@ -9,11 +9,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Gateway } from 'gateway'
 import { Store } from 'contexts/store'
+import { WalletRescanModal } from 'components/WalletRescanModal'
 
 export default function WalletInfo() {
   const wallet = useStore('wallet')
   const [action, setAction] = useState<
-    'change_password' | 'logout' | undefined
+    'change_password' | 'logout' | 'rescan' | undefined
   >(undefined)
   const router = useRouter()
 
@@ -54,6 +55,7 @@ export default function WalletInfo() {
           options={[
             { value: 'change_password', label: 'change password' },
             { value: 'logout', label: 'logout' },
+            { value: 'rescan', label: 'rescan wallet' },
           ]}
           onChange={setAction}
         />
@@ -74,6 +76,9 @@ export default function WalletInfo() {
       </div>
       {action === 'change_password' && (
         <ChangePasswordModal open onSettle={(value) => setAction(undefined)} />
+      )}
+      {action === 'rescan' && (
+        <WalletRescanModal open onSettle={(value) => setAction(undefined)} />
       )}
     </WalletLayout>
   )
