@@ -155,7 +155,7 @@ export default function WalletSend() {
       </div>
       <Button
         btnType="secondary"
-        disabled={hasError.some(_.identity)}
+        disabled={hasError.some(_.identity) || isLoading}
         job={handleSend}>
         Send
       </Button>
