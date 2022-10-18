@@ -3,10 +3,11 @@ import AddressPhoto from 'components/AddressPhoto'
 import Card from 'components/Card'
 import SelectOption from 'components/SelectOption'
 import { useStore } from 'hooks/observe-store'
+import Transaction from 'components/Transaction'
 
 export default function WalletInfo() {
   const wallet = useStore('wallet')
-
+  
   return (
     <WalletLayout title="Account info">
       <div className="flex gap-3 p-2 pb-0">
@@ -40,13 +41,9 @@ export default function WalletInfo() {
 
       <div className="flex flex-col gap-2 w-full">
         {wallet?.transactions.tx_list.length > 0 ? (
-          wallet?.transactions.tx_list.map((tx, index) => (
-            <Card className={'flex flex-col break-all'} key={index}>
-              <span className="break-all">From: {tx.from}</span>
-              <span>To: {tx.to}</span>
-              <span>Amount: {tx.amount}</span>
-            </Card>
-          ))
+          wallet?.transactions.tx_list
+            .slice(0, 9)
+            .map((tx, index) => <Transaction tx={tx} key={index} />)
         ) : (
           <Card className={'flex items-center justify-center'}>
             No transactions...
