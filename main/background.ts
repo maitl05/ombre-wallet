@@ -39,8 +39,8 @@ function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    minWidth: 640,
-    minHeight: 480,
+    minWidth: 1280,
+    minHeight: 640,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
