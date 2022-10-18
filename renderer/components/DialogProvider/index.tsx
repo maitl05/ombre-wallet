@@ -43,7 +43,9 @@ export default function DialogProvider({ children }: DialogProviderProps) {
       title={dialogParams.title}
       open={dialogOpen}
       onClose={settleWith(false)}>
-      {dialogParams.message}
+      {dialogParams.message.split('\n').map((line, index) => (
+        <p key={`line-${index}`}>{line}</p>
+      ))}
       {dialogParams.prompt && (
         <Input
           autoFocus
