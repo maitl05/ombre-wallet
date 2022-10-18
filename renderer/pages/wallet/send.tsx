@@ -80,7 +80,6 @@ export default function WalletSend() {
                 data: {
                   type: 'negative',
                   message,
-                  timeout: 1000,
                 },
               })
               setIsLoading(false)
