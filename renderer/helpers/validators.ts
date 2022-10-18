@@ -46,23 +46,21 @@ export const addressValidator: ValidatorFunction = (value) => {
     case 'cash':
     case 'Suto':
     case 'Te':
-      return value.length === 99 ? undefined : 'Invalid Address'
-
-      return value.length == 98 ? undefined : 'Invalid Address'
+      return value.length === 98 ? undefined : 'Invalid Address'
 
     case 'Suba':
     case 'Ts':
-      return value.length == 99 ? undefined : 'Invalid Address'
+      return value.length == 98 ? undefined : 'Invalid Address'
 
     case 'Shadow':
     case 'casi':
     case 'Suti':
     case 'Ti':
-      return value.length === 110 ? undefined : 'Invalid Address'
+      return value.length === 109 ? undefined : 'Invalid Address'
 
     case 'Shad3':
     case 'Tu':
-      return value.length === 55 ? undefined : 'Invalid Address'
+      return value.length === 54 ? undefined : 'Invalid Address'
 
     default:
       return 'Invalid Address'
