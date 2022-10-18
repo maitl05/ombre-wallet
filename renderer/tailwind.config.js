@@ -69,7 +69,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Source\\ Code\\ Pro'],
+        sans: ['Source\\ Code\\ Pro','mono'],
       },
       fontSize: {
         '2xs': '0.65rem',
