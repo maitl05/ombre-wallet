@@ -39,8 +39,69 @@ export default function TransactionDetailModal({
         }
         open={open}
         onClose={closeHandler}>
-        <div className="flex flex-col justify-between p-3 break-all">
-          {JSON.stringify(txDetail)}
+        <div className="flex flex-col gap-2 justify-between p-3 break-all">
+          <div className="flex">
+            <span className="w-48 shrink-0">transaction ID:</span>
+            <span>{txDetail.txid}</span>
+          </div>
+          <div className="flex">
+            <span className="w-48 shrink-0">related address:</span>
+            <span>{txDetail.address}</span>
+          </div>
+          <div className="flex">
+            <span className="w-48 shrink-0">amount:</span>
+            <span>{txDetail.amount / 1e9}</span>
+          </div>
+          <div className="flex">
+            <span className="w-48 shrink-0">double spend:</span>
+            <span>{txDetail.double_spend_seen ? 'YES' : 'NO (safe)'}</span>
+          </div>
+          <div className="flex">
+            <span className="w-48 shrink-0">fee:</span>
+            <span>{txDetail.fee / 1e9}</span>
+          </div>
+          <div className="flex">
+            <span className="w-48 shrink-0">height:</span>
+            <span>{txDetail.height}</span>
+          </div>
+          <div className="flex">
+            <span className="w-48 shrink-0">note:</span>
+            <span>{txDetail.note.length > 0 ? txDetail.note : '(empty)'}</span>
+          </div>
+          <div className="flex">
+            <span className="w-48 shrink-0">payment ID:</span>
+            <span>
+              {txDetail.payment_id.length > 0 ? txDetail.payment_id : '(empty)'}
+            </span>
+          </div>
+          <div className="flex">
+            <span className="w-48">date:</span>
+            <span>
+              {new Date(txDetail.timestamp * 1000).toLocaleDateString()}{' '}
+              {new Date(txDetail.timestamp * 1000).toLocaleTimeString()}
+            </span>
+          </div>
+          <div className="flex">
+            <span className="w-48">subaddress index:</span>
+            <span className="flex gap-6">
+              <span>major: {txDetail.subaddr_index.major}</span>
+              <span>minor: {txDetail.subaddr_index.minor}</span>
+            </span>
+          </div>
+          {(txDetail.destinations?.length ?? 0) > 0 && (
+            <div className="flex flex-col gap-2">
+              {txDetail.destinations.map((destination) => (
+                <div className="flex">
+                  <span className="w-48 shrink-0">payment ID:</span>
+                  <span>
+                    {txDetail.payment_id.length > 0
+                      ? txDetail.payment_id
+                      : '(empty)'}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </Modal>
     )
