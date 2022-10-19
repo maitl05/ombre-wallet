@@ -54,10 +54,10 @@ export default function WalletInfo() {
           className={{ container: 'w-48' }}
           label="wallet actions"
           options={[
+            { value: 'show_keys', label: 'show keys' },
+            { value: 'rescan', label: 'rescan wallet' },
             { value: 'change_password', label: 'change password' },
             { value: 'logout', label: 'logout' },
-            { value: 'rescan', label: 'rescan wallet' },
-            { value: 'show_keys', label: 'show private keys' },
           ]}
           onChange={setAction}
         />
