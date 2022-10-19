@@ -28,21 +28,19 @@ export default function WalletFooter({
         <span>Balance:</span>
         <span className="children:pl-3">
           {hideBalance ? (
-            <>
+            <div
+              className="cursor-pointer"
+              onClick={() => setHideBalance(false)}>
               {'********'}
-              <FontAwesomeIcon
-                icon={faEyeSlash}
-                onClick={() => setHideBalance(false)}
-              />
-            </>
+              <FontAwesomeIcon icon={faEyeSlash} />
+            </div>
           ) : (
-            <>
-              {(balance/ 1e9).toFixed(3) ?? '---------'}
-              <FontAwesomeIcon
-                icon={faEye}
-                onClick={() => setHideBalance(true)}
-              />
-            </>
+            <div
+              className="cursor-pointer"
+              onClick={() => setHideBalance(true)}>
+              {(balance / 1e9).toFixed(3) ?? '---------'}
+              <FontAwesomeIcon icon={faEye} />
+            </div>
           )}
         </span>
       </div>
