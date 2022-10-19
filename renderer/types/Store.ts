@@ -44,6 +44,7 @@ export type SingleTransaction = {
   txid: string
   type: 'in' | 'out' | 'pool' | 'pending' | 'failed'
   unlock_time: number
+  destinations?: { address: string; amount: number }[]
 }
 
 export type StoreState = {
