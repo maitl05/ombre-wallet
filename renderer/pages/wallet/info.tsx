@@ -10,11 +10,12 @@ import { useRouter } from 'next/router'
 import { Gateway } from 'gateway'
 import { Store } from 'contexts/store'
 import { WalletRescanModal } from 'components/WalletRescanModal'
+import { ShowPrivateKeysModal } from 'components/ShowPrivateKeysModal'
 
 export default function WalletInfo() {
   const wallet = useStore('wallet')
   const [action, setAction] = useState<
-    'change_password' | 'logout' | 'rescan' | undefined
+    'change_password' | 'logout' | 'rescan' | 'show_keys' | undefined
   >(undefined)
   const router = useRouter()
 
@@ -56,6 +57,7 @@ export default function WalletInfo() {
             { value: 'change_password', label: 'change password' },
             { value: 'logout', label: 'logout' },
             { value: 'rescan', label: 'rescan wallet' },
+            { value: 'show_keys', label: 'show private keys' },
           ]}
           onChange={setAction}
         />
@@ -79,6 +81,9 @@ export default function WalletInfo() {
       )}
       {action === 'rescan' && (
         <WalletRescanModal open onSettle={(value) => setAction(undefined)} />
+      )}
+      {action === 'show_keys' && (
+        <ShowPrivateKeysModal open onSettle={(value) => setAction(undefined)} />
       )}
     </WalletLayout>
   )
