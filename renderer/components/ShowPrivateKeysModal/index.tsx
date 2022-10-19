@@ -101,7 +101,7 @@ export const ShowPrivateKeysModal: React.FC<{
             </Button>
           </div>
           <div className="flex flex-col gap-2">
-            <h2 className="text-lg font-bold">Here is your view key</h2>
+            <h2 className="text-lg font-bold">View key</h2>
             <div className="scale-x-95 origin-left">
               {wallet.secret.view_key}
             </div>
@@ -123,7 +123,7 @@ export const ShowPrivateKeysModal: React.FC<{
             </Button>
           </div>
           <div className="flex flex-col gap-2">
-            <h2 className="text-lg font-bold">Here is your spend key</h2>
+            <h2 className="text-lg font-bold">Spend key</h2>
             <div className="scale-x-95 origin-left">
               {wallet.secret.spend_key}
             </div>
