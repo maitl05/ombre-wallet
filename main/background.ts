@@ -4,19 +4,25 @@ import menuTemplate from './menu'
 import isDev from 'electron-is-dev'
 import windowStateKeeper from 'electron-window-state'
 import path from 'path'
+import serve from 'electron-serve'
+import fs from 'fs'
 
 require('electron-debug')({
   showDevTools: true,
 })
 
-if (process.env.PROD) {
+if (!isDev) {
   globalThis.__ombre_bin = path
-    .join(__dirname, '..', 'bin')
+    .join(__dirname, '..', '..', 'bin')
     .replace(/\\/g, '\\\\')
 } else {
   globalThis.__ombre_bin = path
     .join(process.cwd(), 'bin')
     .replace(/\\/g, '\\\\')
+}
+
+if (!isDev) {
+  serve({ directory: 'app' })
 }
 
 let mainWindow, backend, tray
@@ -135,7 +141,11 @@ function createWindow() {
 
   const port = process.argv[2]
 
-  mainWindow.loadURL(`http://localhost:${port}`)
+  if (isDev) {
+    mainWindow.loadURL(`http://localhost:${port}`)
+  } else {
+    mainWindow.loadURL('app://./index.html')
+  }
   mainWindowState.manage(mainWindow)
 }
 
@@ -144,7 +154,7 @@ app.on('ready', () => {
     const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
   } else {
-    tray = new Tray('./main/statics/omb-small.png')
+    tray = new Tray(path.join(__dirname, 'static', 'icon.png'))
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Show Ombre Wallet',

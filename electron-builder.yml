@@ -1,12 +1,26 @@
-appId: com.example.nextron
-productName: My Nextron App
-copyright: Copyright © 2018 Yoshihide Shiono
+appId: com.ombre-currency.wallet
+productName: Ombre Wallet
+copyright: Copyright © 2022 Ombre cryptocurrency project
+
 directories:
   output: dist
-  buildResources: resources
+  buildResources: './resources'
+
 files:
   - from: .
     filter:
       - package.json
       - app
+
+extraResources: './bin'
+
+linux:
+  target: 'AppImage'
+  icon: './resources/icon.png'
 publish: null
+
+mac:
+  icon: './resources/icon.icns'
+
+win:
+  icon: './resources/icon.ico'

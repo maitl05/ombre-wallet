@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { storeDefaultState } from '../static/store-defaults'
+import { storeDefaultState } from '../statics/store-defaults'
 import { StoreState } from '../types/Store'
 import { EventEmitter } from 'events'
 import { DeepPartial, Subscribable } from 'types/utils'
@@ -42,59 +42,59 @@ class StoreClass extends Subscribable<StoreState> {
     this.emit('*', res as StoreState)
   }
 
-  get isReady() {
-    let target_height
-    if (
-      this._state.app.config.daemon.type === 'local' &&
-      !this._state.daemon.info.is_ready
-    ) {
-      target_height = Math.max(
-        this._state.daemon.info.height,
-        this._state.daemon.info.target_height,
-      )
-    } else {
-      target_height = this._state.daemon.info.height
-    }
+  // get isReady() {
+  //   let target_height
+  //   if (
+  //     this._state.app.config.daemon.type === 'local' &&
+  //     !this._state.daemon.info.is_ready
+  //   ) {
+  //     target_height = Math.max(
+  //       this._state.daemon.info.height,
+  //       this._state.daemon.info.target_height,
+  //     )
+  //   } else {
+  //     target_height = this._state.daemon.info.height
+  //   }
 
-    if (this._state.app.config.daemon.type === 'local') {
-      return (
-        this._state.daemon.info.is_ready &&
-        this._state.wallet.info.height >= target_height - 1
-      )
-    } else {
-      return this._state.wallet.info.height >= target_height - 1
-    }
-  }
+  //   if (this._state.app.config.daemon.type === 'local') {
+  //     return (
+  //       this._state.daemon.info.is_ready &&
+  //       this._state.wallet.info.height >= target_height - 1
+  //     )
+  //   } else {
+  //     return this._state.wallet.info.height >= target_height - 1
+  //   }
+  // }
 
-  get isAbleToSend() {
-    let target_height
-    if (
-      this._state.app.config.daemon.type === 'local' &&
-      !this._state.daemon.info.is_ready
-    ) {
-      target_height = Math.max(
-        this._state.daemon.info.height,
-        this._state.daemon.info.target_height,
-      )
-    } else {
-      target_height = this._state.daemon.info.height
-    }
+  // get isAbleToSend() {
+  //   let target_height
+  //   if (
+  //     this._state.app.config.daemon.type === 'local' &&
+  //     !this._state.daemon.info.is_ready
+  //   ) {
+  //     target_height = Math.max(
+  //       this._state.daemon.info.height,
+  //       this._state.daemon.info.target_height,
+  //     )
+  //   } else {
+  //     target_height = this._state.daemon.info.height
+  //   }
 
-    if (this._state.app.config.daemon.type === 'local') {
-      return (
-        this._state.daemon.info.is_ready &&
-        this._state.wallet.info.height >= target_height - 1
-      )
-    } else if (this._state.app.config.daemon.type === 'local_remote') {
-      return (
-        this._state.daemon.info.height_without_bootstrap >= target_height &&
-        this._state.wallet.info.height >= target_height - 1
-      )
-    } else {
-      return this._state.wallet.info.height >= target_height - 1
-    }
-    return false
-  }
+  //   if (this._state.app.config.daemon.type === 'local') {
+  //     return (
+  //       this._state.daemon.info.is_ready &&
+  //       this._state.wallet.info.height >= target_height - 1
+  //     )
+  //   } else if (this._state.app.config.daemon.type === 'local_remote') {
+  //     return (
+  //       this._state.daemon.info.height_without_bootstrap >= target_height &&
+  //       this._state.wallet.info.height >= target_height - 1
+  //     )
+  //   } else {
+  //     return this._state.wallet.info.height >= target_height - 1
+  //   }
+  //   return false
+  // }
 
   resetWalletData() {
     this._state.wallet = {
@@ -133,13 +133,13 @@ class StoreClass extends Subscribable<StoreState> {
     })
   }
 
-  resetPendingConfig() {
-    this.update({
-      app: {
-        pending_config: this._state.app.config,
-      },
-    })
-  }
+  // resetPendingConfig() {
+  //   this.update({
+  //     app: {
+  //       pending_config: this._state.app.config,
+  //     },
+  //   })
+  // }
 }
 
 const Store = StoreClass.instance
