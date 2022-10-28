@@ -37,10 +37,10 @@ function Index() {
       (status: AppStatus, router: NextRouter) => {
         switch (status) {
           case AppStatus.FirstBoot:
-            router.push('/welcome')
+            router.replace('/welcome')
             break
           case AppStatus.WalletSelect:
-            router.push('/wallet-select')
+            router.replace('/wallet-select')
             break
         }
       },

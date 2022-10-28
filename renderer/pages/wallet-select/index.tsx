@@ -53,7 +53,7 @@ const WalletSelect: NextPage = () => {
 
   useEffect(() => {
     if (addWalletStatus === 'done' || recoverWalletStatus === 'done') {
-      router.push('/wallet/info')
+      router.replace('/wallet/info')
     }
   }, [addWalletStatus, recoverWalletStatus, router])
 
@@ -109,7 +109,7 @@ const WalletSelect: NextPage = () => {
                     setIsLoading(true)
                     walletStatusChange
                       .expect()
-                      .then(() => router.push('/wallet/info'))
+                      .then(() => router.replace('/wallet/info'))
                       .catch(_.noop)
                       .finally(() => setIsLoading(false))
                   }
@@ -123,7 +123,7 @@ const WalletSelect: NextPage = () => {
                 setIsLoading(true)
                 walletStatusChange
                   .expect()
-                  .then(() => router.push('/wallet/info'))
+                  .then(() => router.replace('/wallet/info'))
                   .catch(_.noop)
                   .finally(() => setIsLoading(false))
               }

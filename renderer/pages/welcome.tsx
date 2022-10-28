@@ -12,7 +12,7 @@ function WelcomePage() {
   >('undone')
   useEffect(() => {
     if (initConfigState === 'done') {
-      router.push('/')
+      router.replace('/')
     }
   }, [initConfigState])
 

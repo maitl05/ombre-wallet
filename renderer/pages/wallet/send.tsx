@@ -74,7 +74,7 @@ export default function WalletSend() {
                   message: status.message,
                 },
               })
-              router.push('/wallet/history')
+              router.replace('/wallet/history')
               setIsLoading(false)
             })
             .catch((message) => {
