@@ -13,7 +13,8 @@
     "build:win64": "nextron build --win --x64",
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux",
-    "postinstall": "chmod +x ./prep.sh ; ./prep.sh ; electron-builder install-app-deps"
+    "prep-linux":"chmod +x ./prep.sh ; ./prep.sh",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "@babel/core": "^7.19.3",
