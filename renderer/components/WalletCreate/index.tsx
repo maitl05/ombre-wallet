@@ -1,7 +1,3 @@
-import Button from 'components/Button'
-import Modal from 'components/Modal'
-import WalletLayout from 'components/WalletLayout'
-import { Gateway } from 'gateway'
 import { useEffect, useState } from 'react'
 import WalletCreateBackup from './backup'
 import WalletCreateConfirm from './confirm'
