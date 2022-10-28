@@ -4,7 +4,7 @@ copyright: Copyright © 2022 Ombre cryptocurrency project
 
 directories:
   output: dist
-  buildResources: './resources'
+  buildResources: './renderer/static'
 
 files:
   - from: .
@@ -17,7 +17,6 @@ extraResources: './bin'
 linux:
   target: 'AppImage'
   icon: './renderer/static/icon.png'
-publish: null
 
 mac:
   icon: './renderer/static/icon.icns'
