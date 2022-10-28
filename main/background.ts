@@ -7,10 +7,6 @@ import path from 'path'
 import serve from 'electron-serve'
 import fs from 'fs'
 
-require('electron-debug')({
-  showDevTools: true,
-})
-
 if (!isDev) {
   globalThis.__ombre_bin = path
     .join(__dirname, '..', '..', 'bin')
@@ -48,6 +44,7 @@ function createWindow() {
     minWidth: 1010,
     minHeight: 640,
     webPreferences: {
+      devTools: isDev,
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -154,6 +151,7 @@ app.on('ready', () => {
     const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
   } else {
+    !isDev && Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate))
     tray = new Tray(path.join(__dirname, 'static', 'icon.png'))
     const contextMenu = Menu.buildFromTemplate([
       {
