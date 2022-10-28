@@ -16,7 +16,7 @@ extraResources: './bin'
 
 linux:
   target: 'AppImage'
-  icon: './renderer/static/icon.png'
+  icon: './renderer/static/icons/icon.icns'
 
 mac:
   icon: './renderer/static/icon.icns'

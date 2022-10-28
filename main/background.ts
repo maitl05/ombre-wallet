@@ -43,6 +43,7 @@ function createWindow() {
     height: mainWindowState.height,
     minWidth: 1010,
     minHeight: 640,
+    icon: path.join(__dirname, 'static/icon.png'),
     webPreferences: {
       devTools: isDev,
       nodeIntegration: true,
