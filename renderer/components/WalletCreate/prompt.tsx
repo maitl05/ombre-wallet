@@ -85,7 +85,7 @@ export default function WalletCreatePrompt({
             onChange={setPageData('type')}
             options={[
               { label: 'Long', value: 'long' },
-              { label: 'KURZ', value: 'kurz' },
+              // { label: 'KURZ', value: 'kurz' },
             ]}
             defaultValue={{ label: 'Long', value: 'long' }}
           />
